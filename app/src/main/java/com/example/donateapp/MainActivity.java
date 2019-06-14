@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Ingresar("http://192.168.15.25:8080/donateapp/buscar_usuario.php?user="+(user.getText().toString())+"&"+
+                Ingresar("http://192.168.43.80:8080/donateapp/buscar_usuario.php?user="+(user.getText().toString())+"&"+
                         "password="+(pass.getText().toString()));
             }
         });

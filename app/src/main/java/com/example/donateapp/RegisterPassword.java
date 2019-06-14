@@ -37,7 +37,7 @@ public class RegisterPassword extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    ejecutarServicio("http://192.168.15.25:8080/donateapp/insertar_usuario.php");
+                    ejecutarServicio("http://192.168.43.80:8080/donateapp/insertar_usuario.php");
 
             }
         });
@@ -45,16 +45,24 @@ public class RegisterPassword extends AppCompatActivity {
 
     private void ejecutarServicio(String URL){
 
+
         Bundle extras = getIntent().getExtras();
         final Persona obj = extras.getParcelable("persona");
+        obj.password = pass.getText().toString();
+
+        final Intent o = new Intent(this, Main2Activity.class);
+
+
+
         obj.password = pass.getText().toString();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getApplicationContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(RegisterPassword.this, MainPage.class);
-                startActivity(i);
+
+               startActivity(o);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -71,10 +79,12 @@ public class RegisterPassword extends AppCompatActivity {
                 parametros.put("email", obj.eMail.toString());
                 parametros.put("pass", obj.password.toString());
                 return parametros;
+
             }
         };
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+
 
     }
 }

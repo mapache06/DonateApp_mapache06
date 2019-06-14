@@ -3,17 +3,17 @@
 
 
     <item
-    android:id="@+id/nav_Add"
+    android:id="@+id/nav_User"
     android:icon="@drawable/image_user"
     android:title="User" />
 
     <item
-    android:id="@+id/nav_User"
+    android:id="@+id/nav_Message"
     android:icon="@drawable/image_message"
     android:title="Message"/>
 
     <item
-        android:id="@+id/nav_Notification"
+        android:id="@+id/nav_Home"
         android:icon="@drawable/image_add"
         android:title="Home" />
 
@@ -24,7 +24,7 @@
         android:title="Location"/>
 
     <item
-        android:id="@+id/nav_Menu"
+        android:id="@+id/nav_More"
         android:icon="@drawable/image_menu"
         android:title="More"/>
 
