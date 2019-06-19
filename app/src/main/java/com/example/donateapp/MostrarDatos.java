@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class MostrarDatos extends AppCompatActivity {
-    TextView name,lastName,UserName,eMail,Password;
+    private TextView name,lastName,UserName,eMail,Password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

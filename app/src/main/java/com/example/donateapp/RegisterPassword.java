@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterPassword extends AppCompatActivity {
-    EditText pass, confirmpass;
-    Button next;
+    private EditText pass, confirmpass;
+    private Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

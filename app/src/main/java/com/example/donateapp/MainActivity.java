@@ -22,9 +22,9 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText user, pass;
-    Button login;
-    RequestQueue requestQueue;
+    private EditText user, pass;
+    private Button login;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Ingresar("http://192.168.43.80:8080/donateapp/buscar_usuario.php?user="+(user.getText().toString())+"&"+
+                Ingresar("http://192.168.0.8:8080/donateapp/buscar_usuario.php?user="+(user.getText().toString())+"&"+
                         "password="+(pass.getText().toString()));
             }
         });
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void Ingresar(String URL){
         final Persona obj = new Persona();
-        final Intent o = new Intent(this, MostrarDatos.class);
+        final Intent o = new Intent(this, Main2Activity.class);
 
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
 
                         jsonObject = response.getJSONObject(i);
-                        obj.id = jsonObject.getInt("ID");
+                        obj.id = jsonObject.getInt("Id");
                         obj.name = jsonObject.getString("Nombre").toString();
                         obj.lastName = jsonObject.getString("Apellido".toString());
                         obj.userName = jsonObject.getString("UserName").toString();

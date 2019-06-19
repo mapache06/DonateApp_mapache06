@@ -6,7 +6,16 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_inicial">inicial</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="Nombre">Esdras Yahir Lopez</string>
+    <string name="UserName">Mapache06</string>
+    <string name="Publicado">Publicado</string>
+    <string name="Recibido">Recibido</string>
+    <string name="RecibidoConteo">25</string>
+    <string name="PublicadoConteo">13</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_user">Fragment User</string>
+    <string name="todo">TODO</string>
 </resources>

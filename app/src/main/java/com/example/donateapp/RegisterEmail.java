@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 public class RegisterEmail extends AppCompatActivity {
-    EditText eMail;
+    private EditText eMail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

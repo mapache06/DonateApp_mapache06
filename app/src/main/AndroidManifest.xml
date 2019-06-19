@@ -12,7 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Main2Activity"/>
+        <activity
+            android:name=".Main2Activity"
+            android:windowSoftInputMode="adjustPan">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
         <activity android:name=".MostrarDatos" />
         <activity android:name=".RegisterNombre" />
         <activity android:name=".RegisterUser" />

@@ -9,8 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class RegisterNombre extends AppCompatActivity {
-    TextView name, lastName;
-    Button next;
+    private TextView name, lastName;
+    private Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

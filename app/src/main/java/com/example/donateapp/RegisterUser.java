@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class RegisterUser extends AppCompatActivity {
-    EditText userName;
+    private EditText userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

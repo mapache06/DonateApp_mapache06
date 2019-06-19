@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +10,127 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Fragment User" />
+        android:background="@color/Fondo"
+        android:text="@string/fragment_user"
+        android:textColor="@color/Textos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="380dp"
+            android:background="@drawable/fondo_user"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/todo" />
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/foto_perfil"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="86dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/esdrasjpg"
+            app:civ_border_color="@color/Fondo"
+            app:civ_border_width="2dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/Fondo"
+            app:civ_shadow_radius="10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/fu_Nombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Esdras Yahir López"
+            android:textColor="@color/Fondo"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="@+id/foto_perfil"
+            app:layout_constraintStart_toStartOf="@+id/foto_perfil"
+            app:layout_constraintTop_toBottomOf="@+id/foto_perfil" />
+
+        <TextView
+            android:id="@+id/fu_UserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Mapache06"
+            android:textColor="@color/Fondo"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@+id/fu_Nombre"
+            app:layout_constraintStart_toStartOf="@+id/fu_Nombre"
+            app:layout_constraintTop_toBottomOf="@+id/fu_Nombre" />
+
+        <TextView
+            android:id="@+id/Rec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Recibido"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/Rec_Conteo"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/Rec_Conteo"
+            app:layout_constraintTop_toBottomOf="@+id/Rec_Conteo" />
+
+        <TextView
+            android:id="@+id/Pub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Publicado"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/Pub_Conteo"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/Pub_Conteo"
+            app:layout_constraintTop_toBottomOf="@+id/Pub_Conteo" />
+
+        <TextView
+            android:id="@+id/Pub_Conteo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="65dp"
+            android:layout_marginEnd="16dp"
+            android:text="13"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/Rec_Conteo"
+            app:layout_constraintEnd_toStartOf="@+id/Rec_Conteo"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/Rec_Conteo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="65dp"
+            android:text="25"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/Pub_Conteo"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    </android.support.constraint.ConstraintLayout>
 </FrameLayout>

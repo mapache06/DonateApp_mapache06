@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
@@ -19,21 +20,36 @@ import com.example.donateapp.fragments_menu.FUser;
 
 public class Main2Activity extends AppCompatActivity {
     private TextView mTextMessage;
-    private BottomNavigationView nav_view;
+    private BottomNavigationView bottom_nav;
+    private Persona obj = new Persona();
+    private Bundle bundle = new Bundle();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        //ImageView imagen = (ImageView) findViewById(R.id.im1);
-        //int color = Color.parseColor("#E61E24");
-        //imagen.setColorFilter(color);
+
+        Bundle extras = getIntent().getExtras();
+        final Persona obj = extras.getParcelable("persona");
+        Fragment f = new FHome();
 
 
 
-/*
-        nav_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+
+
+
+
+
+        bottom_nav = findViewById(R.id.nav_view);
+
+        cambiarFragment(f);
+        bottom_nav.setSelectedItemId(R.id.nav_Home);
+
+
+
+        bottom_nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
@@ -66,7 +82,11 @@ public class Main2Activity extends AppCompatActivity {
 
                     case R.id.nav_User:
                         f = new FUser();
+                        f.setArguments(bundle);
+                        bundle.putParcelable("x",obj);
+
                         cambiarFragment(f);
+
 
                         return true;
                 }
@@ -83,6 +103,6 @@ public class Main2Activity extends AppCompatActivity {
         transaction.replace(R.id.container, fragment);
         transaction.commit();
     }
-*/
+
     }
-}
+

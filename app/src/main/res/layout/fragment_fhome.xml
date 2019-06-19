@@ -4,22 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments_menu.FHome">
+    tools:context=".fragments_menu.FHome"
+    android:id="@+id/f_home"
+    android:background="@color/Fondo">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:textColor="@color/Textos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Fragment Home" />
 
-    <ImageView
-        android:id="@+id/im1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="496dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/image_anadir" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/ImagenAdd"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="85dp"
+            android:background="@color/colorPrimary"
+            app:srcCompat="@drawable/vector_add"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:rippleColor="@color/colorPrimary" />
+    </android.support.constraint.ConstraintLayout>
+
 </FrameLayout>
