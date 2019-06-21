@@ -32,12 +32,13 @@ public class RegisterPassword extends AppCompatActivity {
         confirmpass = (EditText) findViewById(R.id.editConfirContraseña);
         next = (Button) findViewById(R.id.btnNextMostr);
 
-
+        String ip1 = getString(R.string.ip);
+        final String url = "http://"+ip1+"/donateapp/insertar_usuario.php";
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    ejecutarServicio("http://192.168.43.80:8080/donateapp/insertar_usuario.php");
+                    ejecutarServicio(url);
 
             }
         });
@@ -50,8 +51,9 @@ public class RegisterPassword extends AppCompatActivity {
         final Persona obj = extras.getParcelable("persona");
         obj.password = pass.getText().toString();
 
-        final Intent o = new Intent(this, Main2Activity.class);
 
+        final Intent o = new Intent(this, Main2Activity.class);
+    o.putExtra("persona",obj);
 
 
         obj.password = pass.getText().toString();

@@ -33,30 +33,45 @@
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/foto_perfil"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
             android:layout_alignBottom="@+id/textView2"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="86dp"
+            android:layout_marginTop="70dp"
             android:layout_marginEnd="8dp"
-            android:src="@drawable/esdrasjpg"
+            android:src="@drawable/sinimagen"
+            app:civ_border="true"
             app:civ_border_color="@color/Fondo"
-            app:civ_border_width="2dp"
+            app:civ_border_width="1dp"
             app:civ_shadow="true"
             app:civ_shadow_color="@color/Fondo"
-            app:civ_shadow_radius="10"
+            app:civ_shadow_radius="20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/Image_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="124dp"
+
+            android:layout_marginBottom="40dp"
+            android:textAlignment="center"
+            app:backgroundTint="@color/Fondo"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toTopOf="@+id/fu_Nombre"
+            app:layout_constraintStart_toStartOf="@+id/foto_perfil"
+            app:srcCompat="@drawable/camera_vector" />
 
         <TextView
             android:id="@+id/fu_Nombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Esdras Yahir López"
+            android:text="@string/Nombre"
             android:textColor="@color/Fondo"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="@+id/foto_perfil"
