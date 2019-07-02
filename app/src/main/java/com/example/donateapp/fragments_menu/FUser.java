@@ -6,15 +6,20 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Camera;
 import android.graphics.Color;
+import android.hardware.camera2.CameraDevice;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -23,6 +28,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +56,11 @@ import com.example.donateapp.VolleySingleton;
 
 import java.io.File;
 
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.support.constraint.Constraints.TAG;
+import static android.support.v4.content.PermissionChecker.checkSelfPermission;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -61,6 +72,7 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
     private CircularImageView Image;
     private ProgressDialog progreso;
     private FloatingActionButton photo;
+    private Button botonCargar;
 
     private static final String CARPETA_PRINCIPAL = "misImagenesApp/";//directorio principal
     private static final String CARPETA_IMAGEN = "imagenes";//carpeta donde se guardan las fotos
@@ -68,6 +80,9 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
     private String path;//almacena la ruta de la imagen
     private File fileImagen;
     private Bitmap bitmap;
+
+    public static final String TAG = "logcat";
+
 
 
 
@@ -85,7 +100,8 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
             obj = getArguments().getParcelable("x");
         }
 
-
+        String nombreDirectorioPublico = "subdirectorio-publico-pictures";
+        crearDirectorioPublico(nombreDirectorioPublico);
     }
 
     @Override
@@ -100,6 +116,11 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
         photo = (FloatingActionButton) view.findViewById(R.id.Image_photo);
         String xx = getString(R.string.Nombre);
 
+        if(isExternalStorageWritable()){
+            Log.d(TAG, "El almacenamiento externo esta disponible :)");
+        }else{
+            Log.e(TAG, "El almacenamiento externo no esta disponible :(");
+        }
 
         int color = Color.parseColor("#EC676B");
         photo.setColorFilter(color);
@@ -119,7 +140,7 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
             }
         });
 
-
+        validaPermisos();
         return view;
     }
 
@@ -151,7 +172,15 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
         });
         builder.show();
     }
+    public File crearDirectorioPublico(String nombreDirectorio) {
+        //Crear directorio público en la carpeta Pictures.
+        File directorio = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), nombreDirectorio);
+        //Muestro un mensaje en el logcat si no se creo la carpeta por algun motivo
+        if (!directorio.mkdirs())
+            Log.e(TAG, "Error: No se creo el directorio público");
 
+        return directorio;
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -176,10 +205,14 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
                 break;
         }
     }
-
+    private boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
+    }
     private void abrirCamara(){
-        File miFile=new File(Environment.getExternalStorageDirectory(),DIRECTORIO_IMAGEN);
+        File miFile=new File(Environment.DIRECTORY_PICTURES,DIRECTORIO_IMAGEN);
         boolean isCreada = miFile.exists();
+
 
         if(isCreada==false){
             isCreada=miFile.mkdirs();
@@ -215,6 +248,81 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
             ////
         }
     }
+
+    private boolean validaPermisos(){
+
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M){
+            return true;
+        }
+
+        if((checkSelfPermission(getContext(), CAMERA)== PackageManager.PERMISSION_GRANTED) &&
+        (checkSelfPermission(getContext(), WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+            return true;
+
+        }
+
+        if((shouldShowRequestPermissionRationale(CAMERA)) ||
+        (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE))){
+            cargarDialogoRecomendacion();
+
+        }else{
+            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,CAMERA},100);
+        }
+
+        return false;
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode==100){
+            if(grantResults.length==2 && grantResults[0]==PackageManager.PERMISSION_GRANTED
+                    && grantResults[1]==PackageManager.PERMISSION_GRANTED){
+                botonCargar.setEnabled(true);
+            }else{
+                solicitarPermisosManual();
+            }
+        }
+
+    }
+    private void solicitarPermisosManual() {
+        final CharSequence[] opciones={"si","no"};
+        final AlertDialog.Builder alertOpciones=new AlertDialog.Builder(getContext());
+        alertOpciones.setTitle("¿Desea configurar los permisos de forma manual?");
+        alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (opciones[i].equals("si")){
+                    Intent intent=new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri=Uri.fromParts("package",getContext().getPackageName(),null);
+                    intent.setData(uri);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getContext(),"Los permisos no fueron aceptados",Toast.LENGTH_SHORT).show();
+                    dialogInterface.dismiss();
+                }
+            }
+        });
+        alertOpciones.show();
+    }
+    private void cargarDialogoRecomendacion() {
+
+        AlertDialog.Builder dialogo=new AlertDialog.Builder(getContext());
+        dialogo.setTitle("Permisos Desactivados");
+        dialogo.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la App");
+
+        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,CAMERA},100);
+            }
+        });
+        dialogo.show();
+    }
+
     private void cargarWebService() {
 
         progreso=new ProgressDialog(getContext());
