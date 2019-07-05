@@ -31,16 +31,11 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         Bundle extras = getIntent().getExtras();
-        final Persona obj = extras.getParcelable("persona");
+        if(extras.getParcelable("persona")!= null) {
+            final Persona obj = extras.getParcelable("persona");
+
+        }
         Fragment f = new FHome();
-
-
-
-
-
-
-
-
 
         bottom_nav = findViewById(R.id.nav_view);
 

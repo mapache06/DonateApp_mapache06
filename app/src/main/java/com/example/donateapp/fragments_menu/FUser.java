@@ -350,7 +350,7 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
     public void onResponse(JSONObject response) {
         progreso.hide();
 
-        //    Toast.makeText(getContext(),"Mensaje: "+response,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"Mensaje: "+response,Toast.LENGTH_SHORT).show();
 
         Persona miUsuario=new Persona();
 
