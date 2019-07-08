@@ -32,7 +32,7 @@ public class Main2Activity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if(extras.getParcelable("persona")!= null) {
-            final Persona obj = extras.getParcelable("persona");
+            obj = extras.getParcelable("persona");
 
         }
         Fragment f = new FHome();

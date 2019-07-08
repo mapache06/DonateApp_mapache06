@@ -53,6 +53,7 @@ import org.w3c.dom.Text;
 import com.example.donateapp.R;
 import com.example.donateapp.Persona;
 import com.example.donateapp.VolleySingleton;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
@@ -82,6 +83,8 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
     private Bitmap bitmap;
 
     public static final String TAG = "logcat";
+    private String ip=getString(R.string.ip);
+    private final String urlImagen = "http://"+ip+"/donateapp/";
 
 
 
@@ -100,8 +103,18 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
             obj = getArguments().getParcelable("x");
         }
 
-        String nombreDirectorioPublico = "subdirectorio-publico-pictures";
-        crearDirectorioPublico(nombreDirectorioPublico);
+
+
+    }
+
+
+
+    private void loadImagenByInternetbyPicasso() {
+        Picasso.get()
+                .load(urlImagen+obj.RutaImagen)
+                .into(Image);
+
+
     }
 
     @Override
@@ -116,12 +129,13 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
         photo = (FloatingActionButton) view.findViewById(R.id.Image_photo);
         String xx = getString(R.string.Nombre);
 
+        /*
         if(isExternalStorageWritable()){
             Log.d(TAG, "El almacenamiento externo esta disponible :)");
         }else{
             Log.e(TAG, "El almacenamiento externo no esta disponible :(");
         }
-
+*/
         int color = Color.parseColor("#EC676B");
         photo.setColorFilter(color);
 
@@ -130,20 +144,15 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
             Name.setText(obj.name.toString());
             Username.setText(obj.userName.toString());
             cargarWebService();
+           // loadImagenByInternetbyPicasso();
         }
 
 
-        photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cargarDialog();
-            }
-        });
 
-        validaPermisos();
         return view;
     }
 
+    /*
     private void cargarDialog() {
         //Toast.makeText(getContext(),"Hola",Toast.LENGTH_SHORT).show();
         final CharSequence[] opciones={"Tomar Foto","Elegir de Galeria","Cancelar"};
@@ -322,14 +331,14 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
         });
         dialogo.show();
     }
-
+*/
     private void cargarWebService() {
 
         progreso=new ProgressDialog(getContext());
         progreso.setMessage("Consultando...");
         progreso.show();
 
-        String ip=getString(R.string.ip);
+
 
         String url="http://"+ip+"/donateapp/wsJSONConsultarUsuarioImagen.php?Correo="
                 +obj.eMail.toString();
@@ -357,6 +366,7 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
         JSONArray json=response.optJSONArray("usuario");
         JSONObject jsonObject=null;
 
+        /*
         try {
             jsonObject=json.getJSONObject(0);
             miUsuario.setData(jsonObject.optString("Imagen"));
@@ -370,5 +380,6 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
         }else{
             Image.setImageResource(R.drawable.sinimagen);
         }
+        */
     }
 }

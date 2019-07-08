@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements Response.ErrorLis
             miUsuario.eMail = jsonObject.optString("Correo").toString();
             miUsuario.password = jsonObject.optString("Contrasena").toString();
             miUsuario.data=jsonObject.optString("Imagen");
+            miUsuario.RutaImagen = jsonObject.optString("RutaImagen");
             if (miUsuario.name != null) {
                 if (miUsuario.id == 0) {
                     Toast.makeText(this, "Usuario ó Contraseña Incorrectos", Toast.LENGTH_SHORT).show();
