@@ -18,6 +18,7 @@ import com.example.donateapp.fragments_menu.FLocation;
 import com.example.donateapp.fragments_menu.FMessage;
 import com.example.donateapp.fragments_menu.FUser;
 
+//En este activity se crea la barra de navegacion inferior que la app tiene
 public class Main2Activity extends AppCompatActivity {
     private TextView mTextMessage;
     private BottomNavigationView bottom_nav;
@@ -30,20 +31,25 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        //se valida si se mandaron elementos y los recibe
         Bundle extras = getIntent().getExtras();
         if(extras.getParcelable("persona")!= null) {
             obj = extras.getParcelable("persona");
 
         }
+
+
         Fragment f = new FHome();
 
         bottom_nav = findViewById(R.id.nav_view);
 
+        //Se pone por defecto el fragment home
         cambiarFragment(f);
         bottom_nav.setSelectedItemId(R.id.nav_Home);
 
 
 
+        //Aqui se valida que fragment se desea acceder
         bottom_nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -92,7 +98,7 @@ public class Main2Activity extends AppCompatActivity {
     }
 
 
-
+//con este metodo se cambia el fragment
     private void cambiarFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);

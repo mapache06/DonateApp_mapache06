@@ -8,6 +8,8 @@ import android.util.Base64;
 
 import org.json.JSONException;
 
+
+//Aqui se almacena la informacion de la tabla Usuario de la base de datos y se hace un parcelable a la clase
 public class Persona implements Parcelable {
 
     public int id;

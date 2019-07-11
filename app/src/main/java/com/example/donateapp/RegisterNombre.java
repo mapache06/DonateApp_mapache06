@@ -12,6 +12,7 @@ public class RegisterNombre extends AppCompatActivity {
     private TextView name, lastName;
     private Button next;
 
+    //Aqui solo se le solicita el nombre a usuario a registrae y se guuarda en una propiedad del usuario
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +23,7 @@ public class RegisterNombre extends AppCompatActivity {
         next = (Button) findViewById(R.id.btnNextMostr);
     }
 
+    //si clickea siguiente abre la nueva activity
     public void nextNombre(View v){
         Intent i = new Intent(this, RegisterUser.class);
 

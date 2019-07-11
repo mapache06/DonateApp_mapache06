@@ -25,10 +25,17 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
+
+
+//En este fragment se mostraran los productos que esten disponibles
+    //para donacion
 public class FHome extends Fragment {
 
+    //esta variable FloatingActionButton funcionara para agregar un producto que desees donar
     private FloatingActionButton txt;
     private RecyclerView re_products;
+
+    //con este array se llenaran los productos almacenados en la base de datos
     private ArrayList<Productos> Lista_productos;
     public FHome() {
         // Required empty public constructor
@@ -46,16 +53,21 @@ public class FHome extends Fragment {
         // Inflate the layout for this fragment
        // View view1 = inflater.inflate(R.layout.activity_main, container, false);
 
+
+        //Se asignan las variables a sus controles
         Lista_productos = new ArrayList<>();
         txt = (FloatingActionButton) view.findViewById(R.id.ImagenAdd);
         re_products = (RecyclerView) view.findViewById(R.id.recyclerId);
         re_products.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        //se llena el fragment con los productos, mosyrrandolos en un CardView/RecyclerView con el metodo llenar lista
         llenarLista();
+
+        //Se crea una instancia de la clase adapter que se creo previamente y se llama al constructos que recibe una lista
         RecyclerViewAdaptador adaptador = new RecyclerViewAdaptador(Lista_productos);
         re_products.setAdapter(adaptador);
 
-
+//con las 2 lineas de codigo siguiente se le cambia el color al boton flotante
         int color = Color.parseColor("#FFFFFF");
         txt.setColorFilter(color);
 
@@ -63,6 +75,8 @@ public class FHome extends Fragment {
         return view;
     }
 
+
+    //por el momento se esta llenando la lista de manera manual, pero se podra llenar desde la base de datos
     private void llenarLista() {
         Lista_productos.add(new Productos("Mordecai", "Es un pajaro azul con un pico amarillo" +
                 "\n Su mejor amigo es Rigby", R.drawable.mordecai));

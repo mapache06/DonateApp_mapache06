@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+//Aqui se puede iniciar sesion
 public class MainActivity extends AppCompatActivity implements Response.ErrorListener, Response.Listener<JSONObject> {
 
     private EditText user, pass;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements Response.ErrorLis
         user = (EditText) findViewById(R.id.editEmail);
         pass = (EditText) findViewById(R.id.editPassword);
 
+        //Si se selecciona el boton ingresar se manda a llamar el metos ConsultarUsuario()
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,54 +54,8 @@ public class MainActivity extends AppCompatActivity implements Response.ErrorLis
             }
         });
     }
-/*
-    public void Ingresar(String URL){
-        final Persona obj = new Persona();
-        final Intent o = new Intent(this, Main2Activity.class);
 
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                JSONObject jsonObject = null;
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-
-                        jsonObject = response.getJSONObject(i);
-                        obj.id = jsonObject.getInt("Id");
-                        obj.name = jsonObject.getString("Nombre").toString();
-                        obj.lastName = jsonObject.getString("Apellido".toString());
-                        obj.userName = jsonObject.getString("UserName").toString();
-                        obj.eMail = jsonObject.getString("Correo").toString();
-                        obj.password = jsonObject.getString("Contrasena").toString();
-                        obj.setData(jsonObject.getString("Imagen"));
-
-                        if (obj.name != null){
-                            Bundle extras = getIntent().getExtras();
-
-                            o.putExtra("persona",obj);
-                            startActivity(o);
-                        }
-                    } catch (JSONException e) {
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }
-        );
-        requestQueue= Volley.newRequestQueue(this);
-        requestQueue.add(jsonArrayRequest);
-
-
-
-    }
-
-*/
+    //Si se selecciona registrar usuario, te manda a otro activity
     public void registrar(View v){
         Intent i = new Intent(this, RegisterNombre.class);
 
@@ -108,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements Response.ErrorLis
 
     }
 
+
+//se hace una consulta a la base de datos para verificar si existe el usuario
     public void ConsultarUsuario(){
         progreso=new ProgressDialog(this);
         progreso.setMessage("Consultando...");
@@ -119,12 +77,13 @@ public class MainActivity extends AppCompatActivity implements Response.ErrorLis
                 +(user.getText().toString()+"&"+
                       "Pass="+(pass.getText().toString()));
 
-        JsonObjectRequest jsonObjectRequest =new JsonObjectRequest(Request.Method.GET,url,null,  this,this);
+            JsonObjectRequest jsonObjectRequest =new JsonObjectRequest(Request.Method.GET,url,null,  this,this);
         // request.add(jsonObjectRequest);
         VolleySingleton.getIntanciaVolley(this).addToRequestQueue(jsonObjectRequest);
     }
 
 
+    //Si se produce un error se escribe en un toast
     @Override
     public void onErrorResponse(VolleyError error) {
         progreso.hide();
@@ -132,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements Response.ErrorLis
         Log.i("ERROR",error.toString());
     }
 
+    //Se asigno los valores del usuario en un objeto Persona
     @Override
     public void onResponse(JSONObject response) {
         progreso.hide();

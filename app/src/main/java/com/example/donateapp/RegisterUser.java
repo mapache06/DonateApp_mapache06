@@ -10,6 +10,9 @@ import android.widget.TextView;
 public class RegisterUser extends AppCompatActivity {
     private EditText userName;
 
+//Aqui solo se le solicita el nombre de usuario al usuario a registrae y se guuarda en una propiedad del usuario
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

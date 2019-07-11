@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+//Aqui solo se hizo esta activity para verificar si funcionaban los metodos
 public class MostrarDatos extends AppCompatActivity {
     private TextView name,lastName,UserName,eMail,Password;
     @Override

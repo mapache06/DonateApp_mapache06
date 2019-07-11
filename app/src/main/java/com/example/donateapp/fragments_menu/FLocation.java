@@ -12,6 +12,8 @@ import com.example.donateapp.R;
 /**
  * A simple {@link Fragment} subclass.
  */
+
+//En este fragment se podrá asignar la ubicacion donde se desea entregar el producto a donar
 public class FLocation extends Fragment {
 
 

@@ -12,6 +12,8 @@ import com.example.donateapp.R;
 /**
  * A simple {@link Fragment} subclass.
  */
+
+//en este fragment podras ver los mensajes que tienes respecto a las donaciones
 public class FMessage extends Fragment {
 
 

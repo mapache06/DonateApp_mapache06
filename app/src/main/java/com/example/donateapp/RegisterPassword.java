@@ -23,6 +23,7 @@ public class RegisterPassword extends AppCompatActivity {
     private EditText pass, confirmpass;
     private Button next;
 
+    //Aqui solo se le solicita la contraseña a usuario a registrae y se guuarda en una propiedad del usuario
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class RegisterPassword extends AppCompatActivity {
         });
     }
 
+    //con este metodo se insertan los datos del usuario a registrar en la base de datos
     private void ejecutarServicio(String URL){
 
 
@@ -53,10 +55,10 @@ public class RegisterPassword extends AppCompatActivity {
 
 
         final Intent o = new Intent(this, Main2Activity.class);
-    o.putExtra("persona",obj);
+        o.putExtra("persona",obj);
 
 
-        obj.password = pass.getText().toString();
+       // obj.password = pass.getText().toString();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override

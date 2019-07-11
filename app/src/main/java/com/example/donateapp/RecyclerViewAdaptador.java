@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+
+//este es el adaptador sirve de puente para llenar un item(cardview) a un recycler
 public class RecyclerViewAdaptador extends RecyclerView.Adapter<RecyclerViewAdaptador.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

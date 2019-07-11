@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//en esta clase se creara el recycler que trae los productos
 public class Pruebarecycler extends AppCompatActivity {
     private RecyclerView recyclerProductos;
     private RecyclerViewAdaptador adaptadorProducto;
@@ -24,6 +26,7 @@ public class Pruebarecycler extends AppCompatActivity {
         recyclerProductos.setAdapter(adaptadorProducto);
     }
 
+    //este metodo recibe una lista con los productos, por el momento se llenan manual
     public List<Productos> obtenerProducto(){
         List<Productos> productos = new ArrayList<>();
          productos.add(new Productos("Mordecai", "Es un pajaro azul con un pico amarillo" +

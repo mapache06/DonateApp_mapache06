@@ -1,5 +1,5 @@
 package com.example.donateapp;
-
+//Aqui se almacena la informacion de la tabla Producto de la base de datos y se hace un parcelable a la clase
 public class Productos {
     private String Titulo, Descripcion;
     private int fotoProducto;
