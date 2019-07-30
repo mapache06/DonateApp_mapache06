@@ -9,13 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 
 //este es el adaptador sirve de puente para llenar un item(cardview) a un recycler
 public class RecyclerViewAdaptador extends RecyclerView.Adapter<RecyclerViewAdaptador.ViewHolder> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView Titulo, Descripcion;
         private ImageView fotoProducto;
 
@@ -27,7 +29,11 @@ public class RecyclerViewAdaptador extends RecyclerView.Adapter<RecyclerViewAdap
 
 
         }
+
+
     }
+
+
 
     public List<Productos> productos;
 
@@ -38,8 +44,8 @@ public class RecyclerViewAdaptador extends RecyclerView.Adapter<RecyclerViewAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-       View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_prueba, null, false);
-       ViewHolder viewHolder = new ViewHolder(view);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_prueba, null, false);
+        ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;
     }
@@ -48,11 +54,18 @@ public class RecyclerViewAdaptador extends RecyclerView.Adapter<RecyclerViewAdap
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.Titulo.setText(productos.get(i).getTitulo());
         viewHolder.Descripcion.setText(productos.get(i).getDescripcion());
-        viewHolder.fotoProducto.setImageResource(productos.get(i).getFotoProducto());
+         Picasso.get()
+                .load(productos.get(i).getFotoProducto())
+                .into(viewHolder.fotoProducto);
     }
 
     @Override
     public int getItemCount() {
         return productos.size();
     }
+
+
+
+
+
 }

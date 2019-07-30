@@ -29,7 +29,8 @@ public class Pruebarecycler extends AppCompatActivity {
     //este metodo recibe una lista con los productos, por el momento se llenan manual
     public List<Productos> obtenerProducto(){
         List<Productos> productos = new ArrayList<>();
-         productos.add(new Productos("Mordecai", "Es un pajaro azul con un pico amarillo" +
+        /*
+        productos.add(new Productos("Mordecai", "Es un pajaro azul con un pico amarillo" +
                  "\n Su mejor amigo es Rigby", R.drawable.mordecai));
 
         productos.add(new Productos("Elmo", "Es un muppet rojo con ojos grandes" +
@@ -41,7 +42,7 @@ public class Pruebarecycler extends AppCompatActivity {
         productos.add(new Productos("Esdras", "Es un mapache caje con un osico negro" +
                 "\n Su mejor amigo es Rigby", R.drawable.esdrasjpg));
 
-
+*/
         return productos;
     }
 

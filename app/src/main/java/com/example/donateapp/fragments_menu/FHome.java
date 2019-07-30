@@ -2,6 +2,7 @@ package com.example.donateapp.fragments_menu;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.donateapp.Productos;
 import com.example.donateapp.R;
 import com.example.donateapp.RecyclerViewAdaptador;
@@ -35,8 +38,19 @@ public class FHome extends Fragment {
     private FloatingActionButton txt;
     private RecyclerView re_products;
 
+
     //con este array se llenaran los productos almacenados en la base de datos
     private ArrayList<Productos> Lista_productos;
+
+    ProgressDialog progress;
+
+    RequestQueue resquest;
+    JsonObjectRequest jsonObject;
+
+
+
+
+
     public FHome() {
         // Required empty public constructor
 
@@ -57,8 +71,23 @@ public class FHome extends Fragment {
         //Se asignan las variables a sus controles
         Lista_productos = new ArrayList<>();
         txt = (FloatingActionButton) view.findViewById(R.id.ImagenAdd);
+
         re_products = (RecyclerView) view.findViewById(R.id.recyclerId);
         re_products.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+
+
+        cargarWebServices();
+
+
+
+
+
+
+
+
+
 
         //se llena el fragment con los productos, mosyrrandolos en un CardView/RecyclerView con el metodo llenar lista
         llenarLista();
@@ -75,9 +104,16 @@ public class FHome extends Fragment {
         return view;
     }
 
+    private void cargarWebServices() {
+
+
+
+    }
+
 
     //por el momento se esta llenando la lista de manera manual, pero se podra llenar desde la base de datos
     private void llenarLista() {
+        /*
         Lista_productos.add(new Productos("Mordecai", "Es un pajaro azul con un pico amarillo" +
                 "\n Su mejor amigo es Rigby", R.drawable.mordecai));
 
@@ -89,7 +125,9 @@ public class FHome extends Fragment {
 
         Lista_productos.add(new Productos("Esdras", "Es un mapache caje con un osico negro" +
                 "\n Su mejor amigo es Rigby", R.drawable.esdrasjpg));
+   */
     }
+
 
 
 

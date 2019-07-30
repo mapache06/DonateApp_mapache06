@@ -2,13 +2,13 @@ package com.example.donateapp;
 //Aqui se almacena la informacion de la tabla Producto de la base de datos y se hace un parcelable a la clase
 public class Productos {
     private String Titulo, Descripcion;
-    private int fotoProducto;
+    private String fotoProducto;
 
     public Productos(){
 
     }
 
-    public Productos(String titulo, String descripcion, int fotoProducto) {
+    public Productos(String titulo, String descripcion, String fotoProducto) {
         Titulo = titulo;
         Descripcion = descripcion;
         this.fotoProducto = fotoProducto;
@@ -30,11 +30,11 @@ public class Productos {
         Descripcion = descripcion;
     }
 
-    public int getFotoProducto() {
+    public String getFotoProducto() {
         return fotoProducto;
     }
 
-    public void setFotoProducto(int fotoProducto) {
+    public void setFotoProducto(String fotoProducto) {
         this.fotoProducto = fotoProducto;
     }
 }
