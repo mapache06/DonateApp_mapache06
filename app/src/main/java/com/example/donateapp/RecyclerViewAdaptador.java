@@ -54,8 +54,14 @@ public class RecyclerViewAdaptador extends RecyclerView.Adapter<RecyclerViewAdap
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.Titulo.setText(productos.get(i).getTitulo());
         viewHolder.Descripcion.setText(productos.get(i).getDescripcion());
+        String ip = "192.168.0.7:8080";
+        String urlImagen = "http://"+ip+"/donateapp/productoImagen/";
+
          Picasso.get()
-                .load(productos.get(i).getFotoProducto())
+                .load(urlImagen+(productos.get(i).getFotoProducto()).toString())
+                 .resize(800,800)
+                 .centerInside()
+                 .placeholder(R.mipmap.ic_launcher)
                 .into(viewHolder.fotoProducto);
     }
 

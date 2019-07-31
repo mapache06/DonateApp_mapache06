@@ -10,17 +10,27 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.donateapp.Productos;
 import com.example.donateapp.R;
 import com.example.donateapp.RecyclerViewAdaptador;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +42,14 @@ import java.util.List;
 
 //En este fragment se mostraran los productos que esten disponibles
     //para donacion
-public class FHome extends Fragment {
+public class FHome extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener {
 
     //esta variable FloatingActionButton funcionara para agregar un producto que desees donar
     private FloatingActionButton txt;
     private RecyclerView re_products;
+
+
+
 
 
     //con este array se llenaran los productos almacenados en la base de datos
@@ -44,7 +57,7 @@ public class FHome extends Fragment {
 
     ProgressDialog progress;
 
-    RequestQueue resquest;
+    RequestQueue request;
     JsonObjectRequest jsonObject;
 
 
@@ -90,11 +103,9 @@ public class FHome extends Fragment {
 
 
         //se llena el fragment con los productos, mosyrrandolos en un CardView/RecyclerView con el metodo llenar lista
-        llenarLista();
+       // llenarLista();
 
-        //Se crea una instancia de la clase adapter que se creo previamente y se llama al constructos que recibe una lista
-        RecyclerViewAdaptador adaptador = new RecyclerViewAdaptador(Lista_productos);
-        re_products.setAdapter(adaptador);
+
 
 //con las 2 lineas de codigo siguiente se le cambia el color al boton flotante
         int color = Color.parseColor("#FFFFFF");
@@ -105,11 +116,61 @@ public class FHome extends Fragment {
     }
 
     private void cargarWebServices() {
+        String ip = getString(R.string.ip);
+        progress= new ProgressDialog(getContext());
+        progress.setMessage("Consultando Productos...");
+        progress.show();
 
 
+
+        String urlImagen = "http://"+ip+"/donateapp/";
+        String url = "http://"+ip+"/donateapp/ConsultarListaProductos.php";
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null,this,this);
+        request = Volley.newRequestQueue(getContext());
+        request.add(jsonObjectRequest);
 
     }
 
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+        Toast.makeText(getContext(),"No se pudo conectar "+error.toString(),Toast.LENGTH_SHORT).show();
+        Log.i("ERROR",error.toString());
+        progress.hide();
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+    Productos producto = null;
+
+        JSONArray json = response.optJSONArray("producto");
+        try {
+            for (int i = 0; i<json.length(); i++){
+                 producto = new Productos();
+                 JSONObject jsonObject = null;
+                 jsonObject = json.getJSONObject(i);
+
+                 producto.setDescripcion(jsonObject.optString("Descripcion"));
+                 producto.setFotoProducto(jsonObject.getString("Foto"));
+                 producto.setTitulo(jsonObject.getString("Titulo"));
+
+
+                 Lista_productos.add(producto);
+
+                 progress.hide();
+                //Se crea una instancia de la clase adapter que se creo previamente y se llama al constructos que recibe una lista
+                RecyclerViewAdaptador adaptador = new RecyclerViewAdaptador(Lista_productos);
+                re_products.setAdapter(adaptador);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+            Toast.makeText(getContext(),"No se pudo conectar "+response.toString(),Toast.LENGTH_SHORT).show();
+            progress.hide();
+        }
+    }
 
     //por el momento se esta llenando la lista de manera manual, pero se podra llenar desde la base de datos
     private void llenarLista() {
@@ -127,9 +188,6 @@ public class FHome extends Fragment {
                 "\n Su mejor amigo es Rigby", R.drawable.esdrasjpg));
    */
     }
-
-
-
 
 
 
