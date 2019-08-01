@@ -4,10 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-feature android:name="android.hardware.camera"
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -17,11 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.example.donateapp.Pruebarecycler">
-
-        </activity>
+        <activity android:name=".ProductoDetails"></activity>
+        <activity android:name=".Pruebarecycler"></activity>
         <activity
-            android:name="com.example.donateapp.Main2Activity"
+            android:name=".Main2Activity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,13 +29,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.donateapp.MostrarDatos" />
-        <activity android:name="com.example.donateapp.RegisterNombre" />
-        <activity android:name="com.example.donateapp.RegisterUser" />
-        <activity android:name="com.example.donateapp.RegisterEmail" />
-        <activity android:name="com.example.donateapp.RegisterPassword" />
+        <activity android:name=".MostrarDatos" />
+        <activity android:name=".RegisterNombre" />
+        <activity android:name=".RegisterUser" />
+        <activity android:name=".RegisterEmail" />
+        <activity android:name=".RegisterPassword" />
         <activity
-            android:name="com.example.donateapp.MainActivity"
+            android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,20 +44,15 @@
             </intent-filter>
         </activity>
 
-
-
         <provider
-        android:name="android.support.v4.content.FileProvider"
-        android:authorities="com.example.android.fileprovider"
-        android:exported="false"
-        android:grantUriPermissions="true">
-        <meta-data
-        android:name="android.support.FILE_PROVIDER_PATHS"
-        android:resource="@xml/file_paths">
-        </meta-data>
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
         </provider>
-
-
     </application>
 
 </manifest>
