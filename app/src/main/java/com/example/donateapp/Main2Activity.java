@@ -20,7 +20,7 @@ import com.example.donateapp.fragments_menu.FUser;
 
 //En este activity se crea la barra de navegacion inferior que la app tiene
 public class Main2Activity extends AppCompatActivity {
-    private TextView mTextMessage;
+    //private TextView mTextMessage;
     private BottomNavigationView bottom_nav;
     private Persona obj = new Persona();
     private Bundle bundle = new Bundle();

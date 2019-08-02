@@ -15,7 +15,14 @@ import java.util.List;
 
 
 //este es el adaptador sirve de puente para llenar un item(cardview) a un recycler
-public class RecyclerViewAdaptador extends RecyclerView.Adapter<RecyclerViewAdaptador.ViewHolder> {
+public class RecyclerViewAdaptador
+        extends RecyclerView.Adapter<RecyclerViewAdaptador.ViewHolder>
+        implements View.OnClickListener {
+
+    List<Productos> productos;
+    private View.OnClickListener listener;
+
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView Titulo, Descripcion;
@@ -35,7 +42,7 @@ public class RecyclerViewAdaptador extends RecyclerView.Adapter<RecyclerViewAdap
 
 
 
-    public List<Productos> productos;
+
 
     public RecyclerViewAdaptador(List<Productos> productos) {
         this.productos = productos;
@@ -46,6 +53,9 @@ public class RecyclerViewAdaptador extends RecyclerView.Adapter<RecyclerViewAdap
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_prueba, null, false);
         ViewHolder viewHolder = new ViewHolder(view);
+
+
+        view.setOnClickListener(this);
 
         return viewHolder;
     }
@@ -71,6 +81,17 @@ public class RecyclerViewAdaptador extends RecyclerView.Adapter<RecyclerViewAdap
     }
 
 
+    public void setOnClickListener(View.OnClickListener listener){
+        this.listener = listener;
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        if(listener != null){
+            listener.onClick(v);
+        }
+    }
 
 
 

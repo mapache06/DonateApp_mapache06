@@ -3,6 +3,7 @@ package com.example.donateapp.fragments_menu;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.donateapp.Main2Activity;
+import com.example.donateapp.ProductoDetails;
 import com.example.donateapp.Productos;
 import com.example.donateapp.R;
 import com.example.donateapp.RecyclerViewAdaptador;
@@ -35,10 +38,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-
 
 //En este fragment se mostraran los productos que esten disponibles
     //para donacion
@@ -47,28 +46,24 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
     //esta variable FloatingActionButton funcionara para agregar un producto que desees donar
     private FloatingActionButton txt;
     private RecyclerView re_products;
-
-
-
-
+    public Productos producto12 = new Productos();
+    Productos producto = null;
 
     //con este array se llenaran los productos almacenados en la base de datos
     private ArrayList<Productos> Lista_productos;
 
+    //Se crea una variable que ayudarra a generar una barra de progreso
     ProgressDialog progress;
 
+    //Se crean  variables de tipo Json que nos ayuda a recibir informacion
     RequestQueue request;
     JsonObjectRequest jsonObject;
 
-
-
-
-
+    //Constructor vacío
     public FHome() {
         // Required empty public constructor
 
     }
-
 
 
     @Override
@@ -77,37 +72,19 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fhome, container, false);
 
-        // Inflate the layout for this fragment
-       // View view1 = inflater.inflate(R.layout.activity_main, container, false);
 
 
         //Se asignan las variables a sus controles
         Lista_productos = new ArrayList<>();
         txt = (FloatingActionButton) view.findViewById(R.id.ImagenAdd);
-
         re_products = (RecyclerView) view.findViewById(R.id.recyclerId);
         re_products.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-
-
+        //Se manda a llmar el metodo que recibe los datos de los productos
         cargarWebServices();
 
 
-
-
-
-
-
-
-
-
-        //se llena el fragment con los productos, mosyrrandolos en un CardView/RecyclerView con el metodo llenar lista
-       // llenarLista();
-
-
-
-//con las 2 lineas de codigo siguiente se le cambia el color al boton flotante
+        //con las 2 lineas de codigo siguiente se le cambia el color al boton flotante
         int color = Color.parseColor("#FFFFFF");
         txt.setColorFilter(color);
 
@@ -116,23 +93,26 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
     }
 
     private void cargarWebServices() {
+        //Se crea esta variable que contiene la ip del servidor
         String ip = getString(R.string.ip);
+
+        //Se crea una barra de progreso que indique al usuario que esta consultando
         progress= new ProgressDialog(getContext());
         progress.setMessage("Consultando Productos...");
         progress.show();
 
-
-
-        String urlImagen = "http://"+ip+"/donateapp/";
+        //Se crea string con la url donde invoca al webservice
         String url = "http://"+ip+"/donateapp/ConsultarListaProductos.php";
 
 
+        //Se recibe la informacion en forma de Json
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null,this,this);
         request = Volley.newRequestQueue(getContext());
         request.add(jsonObjectRequest);
 
     }
 
+    //Si ocurre un error se crea un Toast con los detalles
     @Override
     public void onErrorResponse(VolleyError error) {
 
@@ -141,53 +121,84 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
         progress.hide();
     }
 
+    //Si se realiza la consulta de manera correcta se obtienen todos los elementos que trae
     @Override
     public void onResponse(JSONObject response) {
-    Productos producto = null;
+
 
         JSONArray json = response.optJSONArray("producto");
         try {
             for (int i = 0; i<json.length(); i++){
-                 producto = new Productos();
+
+                producto = new Productos();
                  JSONObject jsonObject = null;
                  jsonObject = json.getJSONObject(i);
 
+
+                 //Se asigna las variables de la clase producto con la key
+                //que es el nombre de la coliumna de la base de datos
                  producto.setDescripcion(jsonObject.optString("Descripcion"));
                  producto.setFotoProducto(jsonObject.getString("Foto"));
                  producto.setTitulo(jsonObject.getString("Titulo"));
+                 producto.setAltitud(jsonObject.getString("Altitud"));
+                 producto.setLatitud(jsonObject.getString("Latitud"));
+                 producto.setCategoría(jsonObject.getString("categoria"));
+                 producto.setSituacion(jsonObject.getString("situacion"));
+                 producto.setHorariosDeRecoleccion(jsonObject.getString("HorariosDeRecoleccion"));
+                 producto.setCondicion(jsonObject.getString("condicion"));
+                 producto.setId(jsonObject.getInt("Id"));
+
 
 
                  Lista_productos.add(producto);
 
+                 ///Se cierra la barra de progreso
                  progress.hide();
+
+
                 //Se crea una instancia de la clase adapter que se creo previamente y se llama al constructos que recibe una lista
                 RecyclerViewAdaptador adaptador = new RecyclerViewAdaptador(Lista_productos);
+
+                //Se le asigna un evento de click al Recycler
+                adaptador.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Intent o = new Intent(getContext(), ProductoDetails.class);
+
+                        producto12.setTitulo(Lista_productos.get(re_products.getChildAdapterPosition(v)).getTitulo());
+                        producto12.setHorariosDeRecoleccion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getHorariosDeRecoleccion());
+                        producto12.setSituacion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getSituacion());
+                        producto12.setCategoría(Lista_productos.get(re_products.getChildAdapterPosition(v)).getCategoría());
+                        producto12.setLatitud(Lista_productos.get(re_products.getChildAdapterPosition(v)).getLatitud());
+                        producto12.setAltitud(Lista_productos.get(re_products.getChildAdapterPosition(v)).getAltitud());
+                        producto12.setFotoProducto(Lista_productos.get(re_products.getChildAdapterPosition(v)).getFotoProducto());
+                        producto12.setDescripcion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getDescripcion());
+                        producto12.setCondicion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getCondicion());
+                        producto12.setId(Lista_productos.get(re_products.getChildAdapterPosition(v)).getId());
+
+
+
+
+
+                        o.putExtra("producto", producto12);
+
+                        startActivity(o);
+                    }
+                });
+
+
                 re_products.setAdapter(adaptador);
             }
         } catch (JSONException e) {
             e.printStackTrace();
 
+            //Si no conecta se manda un Toast con el error
             Toast.makeText(getContext(),"No se pudo conectar "+response.toString(),Toast.LENGTH_SHORT).show();
             progress.hide();
         }
     }
 
-    //por el momento se esta llenando la lista de manera manual, pero se podra llenar desde la base de datos
-    private void llenarLista() {
-        /*
-        Lista_productos.add(new Productos("Mordecai", "Es un pajaro azul con un pico amarillo" +
-                "\n Su mejor amigo es Rigby", R.drawable.mordecai));
 
-        Lista_productos.add(new Productos("Elmo", "Es un muppet rojo con ojos grandes" +
-                "\n Su mejor amigo es Rigby", R.drawable.elmo1));
-
-        Lista_productos.add(new Productos("Rigby", "Es un mapache caje con un osico negro" +
-                "\n Su mejor amigo es Rigby", R.drawable.rigby));
-
-        Lista_productos.add(new Productos("Esdras", "Es un mapache caje con un osico negro" +
-                "\n Su mejor amigo es Rigby", R.drawable.esdrasjpg));
-   */
-    }
 
 
 
