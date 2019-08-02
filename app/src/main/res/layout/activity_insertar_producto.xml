@@ -43,15 +43,18 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:outlineAmbientShadowColor="@color/colorPrimary"
+                    android:backgroundTint="@color/colorPrimary"
+
                     android:hint="Inserta un título"
                     android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHighlight="@color/colorPrimary"
-                    android:textColorHint="@color/Textos"
+                    android:textColorHint="@color/colorPrimaryDark"
                     android:textColorLink="@color/colorPrimary"
                     android:textCursorDrawable="@color/colorPrimaryDark"
                     android:textSize="30dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    />
 
                 <TextView
                     android:id="@+id/DescripcionName"
@@ -74,11 +77,12 @@
                     android:layout_marginEnd="8dp"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:hint="Describe de el artículo a Donar"
+                    android:hint="Describe el artículo a Donar"
+                    android:backgroundTint="@color/colorPrimary"
                     android:inputType="textMultiLine"
                     android:textColor="#000000"
                     android:textColorHighlight="@color/colorPrimary"
-                    android:textColorHint="@color/Textos"
+                    android:textColorHint="@color/colorPrimaryDark"
                     android:textColorLink="@color/colorPrimary"
                     android:textCursorDrawable="@color/colorPrimaryDark"
                     android:outlineAmbientShadowColor="@color/colorPrimary"
@@ -97,7 +101,7 @@
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.AppCompatSpinner
-                    app:backgroundTint="#000000"
+                    app:backgroundTint="@color/colorPrimaryDark"
                     android:id="@+id/CategoriaSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -120,7 +124,7 @@
                     android:textStyle="bold"  />
 
                 <android.support.v7.widget.AppCompatSpinner
-                    app:backgroundTint="#000000"
+                    app:backgroundTint="@color/colorPrimaryDark"
                     android:id="@+id/CondicionSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -151,7 +155,7 @@
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatSpinner
-                        app:backgroundTint="#000000"
+                        app:backgroundTint="@color/colorPrimaryDark"
                         android:id="@+id/AmSpinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -166,11 +170,11 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text=" a "
-                        android:textAlignment="center"
-                        android:textColor="#000000" />
+                        android:textColor="#000000"
+                        android:textSize="18dp"/>
 
                     <android.support.v7.widget.AppCompatSpinner
-                        app:backgroundTint="#000000"
+                        app:backgroundTint="@color/colorPrimaryDark"
                         android:id="@+id/PmSpinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -183,13 +187,6 @@
 
                     <TextView
                         android:id="@+id/textView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="TextView" />
-
-                    <TextView
-                        android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
