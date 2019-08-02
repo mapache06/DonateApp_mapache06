@@ -98,7 +98,7 @@
                     android:textSize="20dp" />
 
                 <TextView
-                    android:id="@+id/CondicionName"
+                    android:id="@+id/CondicionSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -133,7 +133,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/HorarioDeRecoleccion"
+                    android:id="@+id/AmSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"

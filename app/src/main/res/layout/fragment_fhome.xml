@@ -44,7 +44,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:rippleColor="@color/colorPrimary"
-            app:srcCompat="@drawable/vector_add" />
+            app:srcCompat="@drawable/vector_add"/>
 
     </android.support.constraint.ConstraintLayout>
 

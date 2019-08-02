@@ -18,8 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ProductoDetails"></activity>
-        <activity android:name=".Pruebarecycler"></activity>
+        <activity android:name=".InsertarProducto"></activity>
+        <activity android:name=".ProductoDetails" />
+        <activity android:name=".Pruebarecycler" />
         <activity
             android:name=".Main2Activity"
             android:windowSoftInputMode="adjustPan">
@@ -51,7 +52,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
     </application>
 

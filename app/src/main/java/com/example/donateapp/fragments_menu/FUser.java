@@ -189,13 +189,12 @@ static final int REQUEST_IMAGE_CAPTURE = 1;
 //Con la libreria picasso se cargan las fotos de un url
     private void loadImagenByInternetbyPicasso() {
         String ip = getString(R.string.ip);
-        String urlImagen = "http://"+ip+"/donateapp/";
+        String urlImagen = "http://"+ip+"/donateapp/imagenes/";
         String urlfinal = urlImagen+(obj.RutaImagen).toString();
 
         Picasso.get()
                 .load(urlfinal)
                 .into(Image);
-
 
     }
 
@@ -289,7 +288,7 @@ static final int REQUEST_IMAGE_CAPTURE = 1;
                 if (response.equalsIgnoreCase("error")){
                     Toast.makeText(getContext(), "No se ha podido actualizar la foto", Toast.LENGTH_SHORT).show();
                 }else{
-                    obj.RutaImagen = "imagenes/"+ obj.id + ".jpg";
+                    obj.RutaImagen = obj.id + ".jpg";
                     Toast.makeText(getContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
                 }
 

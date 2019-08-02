@@ -23,7 +23,7 @@ public class ProductoDetails extends AppCompatActivity {
         descripcion = (TextView) findViewById(R.id.DescripcionProducto);
         categoria = (TextView) findViewById(R.id.Categoria);
         condicion = (TextView) findViewById(R.id.Condicion);
-        horariosDeRecoleccion = (TextView) findViewById(R.id.HorarioDeRecoleccion);
+        horariosDeRecoleccion = (TextView) findViewById(R.id.AmSpinner);
         imagenProducto = (ImageView) findViewById(R.id.ImagenProducto);
 
 

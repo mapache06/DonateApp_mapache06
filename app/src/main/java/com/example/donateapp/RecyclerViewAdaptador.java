@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -27,12 +28,18 @@ public class RecyclerViewAdaptador
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView Titulo, Descripcion;
         private ImageView fotoProducto;
+        private CircularImageView ImagenUsuario;
+        private TextView Username;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             Titulo = (TextView) itemView.findViewById(R.id.Titulo);
             Descripcion = (TextView) itemView.findViewById(R.id.descripcion);
             fotoProducto = (ImageView) itemView.findViewById(R.id.fotoProductoLayout);
+
+
+            ImagenUsuario = (CircularImageView) itemView.findViewById(R.id.ImagenUserItem);
+            Username = (TextView) itemView.findViewById(R.id.UserNameItem);
 
 
         }
@@ -64,8 +71,13 @@ public class RecyclerViewAdaptador
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.Titulo.setText(productos.get(i).getTitulo());
         viewHolder.Descripcion.setText(productos.get(i).getDescripcion());
+        viewHolder.Username.setText(productos.get(i).getNombreUsuario());
+
+
+
         String ip = "192.168.0.7:8080";
         String urlImagen = "http://"+ip+"/donateapp/productoImagen/";
+        String urlImagen1 = "http://"+ip+"/donateapp/imagenes/";
 
          Picasso.get()
                 .load(urlImagen+(productos.get(i).getFotoProducto()).toString())
@@ -73,6 +85,14 @@ public class RecyclerViewAdaptador
                  .centerInside()
                  .placeholder(R.mipmap.ic_launcher)
                 .into(viewHolder.fotoProducto);
+
+
+        Picasso.get()
+                .load(urlImagen1+(productos.get(i).getImagenUsuario()).toString())
+                .resize(800,800)
+                .centerInside()
+                .placeholder(R.mipmap.ic_launcher)
+                .into(viewHolder.ImagenUsuario);
     }
 
     @Override

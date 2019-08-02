@@ -25,11 +25,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.donateapp.InsertarProducto;
 import com.example.donateapp.Main2Activity;
 import com.example.donateapp.ProductoDetails;
 import com.example.donateapp.Productos;
 import com.example.donateapp.R;
 import com.example.donateapp.RecyclerViewAdaptador;
+import com.example.donateapp.RegisterNombre;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -89,8 +91,20 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
         txt.setColorFilter(color);
 
 
+        txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), InsertarProducto.class);
+
+                startActivity(i);
+            }
+        });
         return view;
     }
+
+
+
+
 
     private void cargarWebServices() {
         //Se crea esta variable que contiene la ip del servidor
@@ -147,6 +161,9 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
                  producto.setHorariosDeRecoleccion(jsonObject.getString("HorariosDeRecoleccion"));
                  producto.setCondicion(jsonObject.getString("condicion"));
                  producto.setId(jsonObject.getInt("Id"));
+                 producto.setIdUsuario(jsonObject.getInt("IdUsuario"));
+                 producto.setNombreUsuario(jsonObject.getString("NombreUsuario"));
+                 producto.setImagenUsuario(jsonObject.getString("RutaImagen"));
 
 
 
@@ -176,6 +193,9 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
                         producto12.setCondicion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getCondicion());
                         producto12.setId(Lista_productos.get(re_products.getChildAdapterPosition(v)).getId());
 
+                        producto12.setImagenUsuario(Lista_productos.get(re_products.getChildAdapterPosition(v)).getImagenUsuario());
+                        producto12.setIdUsuario(Lista_productos.get(re_products.getChildAdapterPosition(v)).getIdUsuario());
+                        producto12.setNombreUsuario(Lista_productos.get(re_products.getChildAdapterPosition(v)).getNombreUsuario());
 
 
 
@@ -193,7 +213,7 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
             e.printStackTrace();
 
             //Si no conecta se manda un Toast con el error
-            Toast.makeText(getContext(),"No se pudo conectar "+response.toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No se pudo conectar "+e.toString(),Toast.LENGTH_SHORT).show();
             progress.hide();
         }
     }

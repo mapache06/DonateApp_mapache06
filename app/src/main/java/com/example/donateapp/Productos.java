@@ -15,6 +15,9 @@ public class Productos implements Parcelable {
     private String situacion;
     private String Altitud;
     private String Latitud;
+    private int IdUsuario;
+    private String NombreUsuario;
+    private String ImagenUsuario;
 
 
 
@@ -31,6 +34,9 @@ public class Productos implements Parcelable {
         situacion = in.readString();
         Altitud = in.readString();
         Latitud = in.readString();
+        NombreUsuario = in.readString();
+        ImagenUsuario = in.readString();
+        IdUsuario = in.readInt();
     }
 
 
@@ -64,16 +70,33 @@ public class Productos implements Parcelable {
         dest.writeString(situacion);
         dest.writeString(Altitud);
         dest.writeString(Latitud);
+        dest.writeInt(IdUsuario);
+        dest.writeString(NombreUsuario);
+        dest.writeString(ImagenUsuario);
     }
 
-    public Productos(String titulo, String descripcion, String fotoProducto) {
-        Titulo = titulo;
-        Descripcion = descripcion;
-        this.fotoProducto = fotoProducto;
+
+    public void setIdUsuario(int IdUsuario) {
+        this.IdUsuario = IdUsuario;
     }
 
-    public String getTitulo() {
-        return Titulo;
+    public int getIdUsuario() { return IdUsuario; }
+
+    public void setNombreUsuario(String NombreUsuario) {
+        this.NombreUsuario = NombreUsuario;
+    }
+
+    public String getNombreUsuario() {
+        return NombreUsuario;
+    }
+
+
+    public void setImagenUsuario(String ImagenUsuario) {
+        this.ImagenUsuario = ImagenUsuario;
+    }
+
+    public String getImagenUsuario() {
+        return ImagenUsuario;
     }
 
     public void setId(int Id) {
@@ -84,6 +107,10 @@ public class Productos implements Parcelable {
 
     public void setTitulo(String titulo) {
         Titulo = titulo;
+    }
+
+    public String getTitulo() {
+        return Titulo;
     }
 
     public String getDescripcion() {
