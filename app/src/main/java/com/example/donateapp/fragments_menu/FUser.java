@@ -62,6 +62,9 @@ import org.w3c.dom.Text;
 import com.example.donateapp.R;
 import com.example.donateapp.Persona;
 import com.example.donateapp.VolleySingleton;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -142,7 +145,7 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
     static final int REQUEST_TAKE_PHOTO = 1;
 
     //con este metodo se realiza la peticion para abrir la camara
-    private void tomarFoto(View v) {
+    private void tomarFoto() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
@@ -172,6 +175,25 @@ static final int REQUEST_IMAGE_CAPTURE = 1;
     //Aqui se hace un set al ImageView y se manda a llamar al metodo ejecutar servicio que guarga la foto en el servidor
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode != REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
+            String ip1 = getString(R.string.ip);
+            final String url = "http://"+ip1+"/donateapp/subir_fotoPerfil.php";
+
+            Uri path = data.getData();
+            Image.setImageURI(path);
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), path);
+                ejecutarServicio(url, bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+        }
+
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
@@ -186,15 +208,33 @@ static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
 
+
 //Con la libreria picasso se cargan las fotos de un url
     private void loadImagenByInternetbyPicasso() {
         String ip = getString(R.string.ip);
         String urlImagen = "http://"+ip+"/donateapp/imagenes/";
-        String urlfinal = urlImagen+(obj.RutaImagen).toString();
+       final String urlfinal = urlImagen+(obj.RutaImagen).toString();
 
         Picasso.get()
+
                 .load(urlfinal)
-                .into(Image);
+                .placeholder(R.mipmap.ic_launcher)
+                .fetch(new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Picasso.get()
+                                .load(urlfinal)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                                .into(Image);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+
 
     }
 
@@ -223,10 +263,11 @@ static final int REQUEST_IMAGE_CAPTURE = 1;
         }
 
 
-        photo.setOnClickListener(new View.OnClickListener() {
+       photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tomarFoto(v);
+                cargarImagen();
+                //tomarFoto(v);
             }
         });
 
@@ -326,4 +367,35 @@ static final int REQUEST_IMAGE_CAPTURE = 1;
 
         return imagenString;
     }
+
+
+
+    private void cargarImagen() {
+        final CharSequence[] opciones = {"Tomar Foto", "Cargar Imagen", "Cancelar"};
+        final AlertDialog.Builder alertaOpciones = new AlertDialog.Builder(getContext());
+        alertaOpciones.setTitle("Seleccione una Opción");
+
+        alertaOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(opciones[which].equals("Tomar Foto") ){
+
+                   tomarFoto();
+
+                }else{
+                    if(opciones[which].equals("Cargar Imagen")){
+                        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        i.setType("image/");
+                        startActivityForResult(i.createChooser(i,"Seleccione la aplicacion"), 10);
+                    }else{
+                        dialog.dismiss();
+                    }
+                }
+            }
+        });
+
+        alertaOpciones.show();
+    }
+
+
 }

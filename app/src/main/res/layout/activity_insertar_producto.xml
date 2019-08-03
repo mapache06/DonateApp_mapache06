@@ -18,6 +18,7 @@
 
             <ImageView
                 android:id="@+id/ImagenProducto"
+                android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
@@ -36,15 +37,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/ImagenProducto">
 
                 <EditText
-                    android:id="@+id/TituloProducto"
+                    android:id="@+id/TituloProductoInsertar"
                     android:layout_width="match_parent"
+                    android:ems="10"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:outlineAmbientShadowColor="@color/colorPrimary"
                     android:backgroundTint="@color/colorPrimary"
-
+                    android:text=""
+                    android:inputType="text"
                     android:hint="Inserta un título"
                     android:textAlignment="textStart"
                     android:textColor="#000000"
@@ -69,13 +72,13 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/DescripcionProducto"
+                    android:id="@+id/DescripcionProductoInsertar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:ems="10"
+                    android:text=""
                     android:gravity="start|top"
                     android:hint="Describe el artículo a Donar"
                     android:backgroundTint="@color/colorPrimary"
@@ -185,13 +188,6 @@
 
                         />
 
-                    <TextView
-                        android:id="@+id/textView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="TextView" />
-
                 </LinearLayout>
 
                 <TextView
@@ -223,7 +219,7 @@
 
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/botonPublicar"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
                         android:text="Publicar"

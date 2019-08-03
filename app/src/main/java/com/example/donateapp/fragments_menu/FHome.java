@@ -27,6 +27,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.donateapp.InsertarProducto;
 import com.example.donateapp.Main2Activity;
+import com.example.donateapp.Persona;
 import com.example.donateapp.ProductoDetails;
 import com.example.donateapp.Productos;
 import com.example.donateapp.R;
@@ -50,6 +51,7 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
     private RecyclerView re_products;
     public Productos producto12 = new Productos();
     Productos producto = null;
+    Persona obj = new Persona();
 
     //con este array se llenaran los productos almacenados en la base de datos
     private ArrayList<Productos> Lista_productos;
@@ -75,6 +77,12 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
         View view = inflater.inflate(R.layout.fragment_fhome, container, false);
 
 
+        //Se valida si se mando del activity anterior un objeto de ser así, lo recibe
+        if (getArguments().getParcelable("x") != null) {
+            obj = getArguments().getParcelable("x");
+        }
+
+
 
         //Se asignan las variables a sus controles
         Lista_productos = new ArrayList<>();
@@ -95,7 +103,7 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), InsertarProducto.class);
-
+                i.putExtra("persona",obj);
                 startActivity(i);
             }
         });

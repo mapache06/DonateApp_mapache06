@@ -60,6 +60,10 @@ public class Main2Activity extends AppCompatActivity {
                     case R.id.nav_Home:
 
                         f = new FHome();
+
+
+                        f.setArguments(bundle);
+                        bundle.putParcelable("x",obj);
                         cambiarFragment(f);
 
                         return true;
@@ -100,6 +104,8 @@ public class Main2Activity extends AppCompatActivity {
 
 //con este metodo se cambia el fragment
     private void cambiarFragment(Fragment fragment){
+        fragment.setArguments(bundle);
+        bundle.putParcelable("x",obj);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
         transaction.commit();

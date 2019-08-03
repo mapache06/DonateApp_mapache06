@@ -60,6 +60,45 @@
 
     <string-array name="comboHorariosPm">
         <item>
+            Seleccione
+        </item>
+        <item>
+            1 am
+        </item>
+        <item>
+            2 am
+        </item>
+        <item>
+            3 am
+        </item>
+        <item>
+            4 am
+        </item>
+        <item>
+            5 am
+        </item>
+        <item>
+            6 am
+        </item>
+        <item>
+            7 am
+        </item>
+        <item>
+            8 am
+        </item>
+        <item>
+            9 am
+        </item>
+        <item>
+            10 am
+        </item>
+        <item>
+            11 am
+        </item>
+        <item>
+            12 pm
+        </item>
+        <item>
             1 pm
         </item>
         <item>
@@ -93,7 +132,7 @@
             11 pm
         </item>
         <item>
-            12 pm
+            12 am
         </item>
 
 

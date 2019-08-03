@@ -19,8 +19,8 @@ public class ProductoDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_producto_details);
 
-        titulo = (TextView) findViewById(R.id.TituloProducto);
-        descripcion = (TextView) findViewById(R.id.DescripcionProducto);
+        titulo = (TextView) findViewById(R.id.TituloProductoInsertar);
+        descripcion = (TextView) findViewById(R.id.DescripcionProductoInsertar);
         categoria = (TextView) findViewById(R.id.Categoria);
         condicion = (TextView) findViewById(R.id.Condicion);
         horariosDeRecoleccion = (TextView) findViewById(R.id.AmSpinner);

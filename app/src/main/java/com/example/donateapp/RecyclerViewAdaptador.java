@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -68,7 +71,7 @@ public class RecyclerViewAdaptador
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         viewHolder.Titulo.setText(productos.get(i).getTitulo());
         viewHolder.Descripcion.setText(productos.get(i).getDescripcion());
         viewHolder.Username.setText(productos.get(i).getNombreUsuario());
@@ -86,13 +89,35 @@ public class RecyclerViewAdaptador
                  .placeholder(R.mipmap.ic_launcher)
                 .into(viewHolder.fotoProducto);
 
-
+final String finalurl = urlImagen1+(productos.get(i).getImagenUsuario()).toString();
         Picasso.get()
                 .load(urlImagen1+(productos.get(i).getImagenUsuario()).toString())
                 .resize(800,800)
                 .centerInside()
                 .placeholder(R.mipmap.ic_launcher)
-                .into(viewHolder.ImagenUsuario);
+
+                .fetch(new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                        Picasso.get()
+                                .load(finalurl)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                                 .into(viewHolder.ImagenUsuario);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+
+
+
+
+
+
     }
 
     @Override
