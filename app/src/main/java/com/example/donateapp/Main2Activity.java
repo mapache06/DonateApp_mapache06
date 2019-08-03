@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.donateapp.fragments_menu.FHome;
+import com.example.donateapp.fragments_menu.FList;
 import com.example.donateapp.fragments_menu.FLocation;
 import com.example.donateapp.fragments_menu.FMessage;
 import com.example.donateapp.fragments_menu.FUser;
@@ -70,17 +71,25 @@ public class Main2Activity extends AppCompatActivity {
 
                     case R.id.nav_Location:
                         f = new FLocation();
+                        f.setArguments(bundle);
+                        bundle.putParcelable("x",obj);
                         cambiarFragment(f);
 
                         return true;
 
                     case R.id.nav_Message:
                         f = new FMessage();
+                        f.setArguments(bundle);
+                        bundle.putParcelable("x",obj);
                         cambiarFragment(f);
 
                         return true;
 
                     case R.id.nav_More:
+                        f = new FList();
+                        f.setArguments(bundle);
+                        bundle.putParcelable("x",obj);
+                        cambiarFragment(f);
 
 
                         return true;

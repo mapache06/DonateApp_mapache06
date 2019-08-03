@@ -89,7 +89,7 @@ public class RecyclerViewAdaptador
                  .placeholder(R.mipmap.ic_launcher)
                 .into(viewHolder.fotoProducto);
 
-final String finalurl = urlImagen1+(productos.get(i).getImagenUsuario()).toString();
+        final String finalurl = urlImagen1+(productos.get(i).getImagenUsuario()).toString();
         Picasso.get()
                 .load(urlImagen1+(productos.get(i).getImagenUsuario()).toString())
                 .resize(800,800)
