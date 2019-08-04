@@ -96,7 +96,7 @@ public class FList extends Fragment implements Response.Listener<JSONObject>, Re
         progress.show();
 
         //Se crea string con la url donde invoca al webservice
-        String url = "http://"+ip+"/donateapp/ConsultarListaProductos.php";
+        String url = "http://"+ip+"/donateapp/ConsultarListaProductos.php?Id="+obj.id;
 
 
         //Se recibe la informacion en forma de Json
@@ -148,7 +148,7 @@ public class FList extends Fragment implements Response.Listener<JSONObject>, Re
                 adaptador.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final Intent o = new Intent(getContext(), ProductoDetails.class);
+                        final Intent o = new Intent(getContext(), InsertarProducto.class);
 
                         producto12.setTitulo(Lista_productos.get(re_Lista.getChildAdapterPosition(v)).getTitulo());
                         producto12.setHorariosDeRecoleccion(Lista_productos.get(re_Lista.getChildAdapterPosition(v)).getHorariosDeRecoleccion());
@@ -162,13 +162,16 @@ public class FList extends Fragment implements Response.Listener<JSONObject>, Re
                         producto12.setId(Lista_productos.get(re_Lista.getChildAdapterPosition(v)).getId());
 
                         producto12.setImagenUsuario(Lista_productos.get(re_Lista.getChildAdapterPosition(v)).getImagenUsuario());
-                        producto12.setIdUsuario(Lista_productos.get(re_Lista.getChildAdapterPosition(v)).getIdUsuario());
+                        producto12.setIdUsuario(obj.id);
                         producto12.setNombreUsuario(Lista_productos.get(re_Lista.getChildAdapterPosition(v)).getNombreUsuario());
 
 
 
 
+
+
                         o.putExtra("producto", producto12);
+                      //  o.putExtra("persona", obj);
 
                         startActivity(o);
                     }

@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -68,13 +71,32 @@ public class RecyclerViewAdaptadorLista
 
         String ip = "192.168.0.7:8080";
         String urlImagen = "http://"+ip+"/donateapp/productoImagen/";
-
+        final String urlfinal = urlImagen+(productos.get(i).getFotoProducto()).toString();
         Picasso.get()
-                .load(urlImagen+(productos.get(i).getFotoProducto()).toString())
+                .load(urlfinal)
                 .resize(800,800)
                 .centerInside()
                 .placeholder(R.mipmap.ic_launcher)
-                .into(viewHolder.fotoProducto);
+
+
+                .fetch(new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                        Picasso.get()
+                                .load(urlfinal)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                                .into(viewHolder.fotoProducto);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+
+
     }
 
     @Override

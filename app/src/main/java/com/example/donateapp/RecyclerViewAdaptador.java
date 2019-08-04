@@ -77,19 +77,37 @@ public class RecyclerViewAdaptador
         viewHolder.Username.setText(productos.get(i).getNombreUsuario());
 
 
-
         String ip = "192.168.0.7:8080";
-        String urlImagen = "http://"+ip+"/donateapp/productoImagen/";
-        String urlImagen1 = "http://"+ip+"/donateapp/imagenes/";
+        String urlImagen = "http://" + ip + "/donateapp/productoImagen/";
+        String urlImagen1 = "http://" + ip + "/donateapp/imagenes/";
+        final String finalurl1 = urlImagen + (productos.get(i).getFotoProducto()).toString();
+        Picasso.get()
+                .load(finalurl1)
+                .resize(800, 800)
+                .centerInside()
+                .placeholder(R.mipmap.ic_launcher)
 
-         Picasso.get()
-                .load(urlImagen+(productos.get(i).getFotoProducto()).toString())
-                 .resize(800,800)
-                 .centerInside()
-                 .placeholder(R.mipmap.ic_launcher)
-                .into(viewHolder.fotoProducto);
+                .fetch(new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                        Picasso.get()
+                                .load(finalurl1)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                                .into(viewHolder.fotoProducto);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+
+
 
         final String finalurl = urlImagen1+(productos.get(i).getImagenUsuario()).toString();
+
         Picasso.get()
                 .load(urlImagen1+(productos.get(i).getImagenUsuario()).toString())
                 .resize(800,800)
@@ -112,9 +130,6 @@ public class RecyclerViewAdaptador
 
                     }
                 });
-
-
-
 
 
 

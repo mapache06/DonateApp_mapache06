@@ -54,6 +54,7 @@ import java.util.Map;
 public class InsertarProducto extends AppCompatActivity implements Response.ErrorListener, Response.Listener<JSONObject> {
 
     ProductoInsertar producto = new ProductoInsertar();
+    Productos producto1 = new Productos();
     Persona obj = new Persona();
 
     private Spinner CategoriaSpinner;
@@ -82,7 +83,10 @@ public class InsertarProducto extends AppCompatActivity implements Response.Erro
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insertar_producto);
 
-        Bundle extras = getIntent().getExtras();
+        //se valida si se mandaron elementos y los recibe
+        Bundle extras = new Bundle();
+        extras = getIntent().getExtras();
+
         if(extras.getParcelable("persona")!= null) {
             obj = extras.getParcelable("persona");
 
@@ -100,11 +104,35 @@ public class InsertarProducto extends AppCompatActivity implements Response.Erro
         Titulo = (EditText) findViewById(R.id.TituloProductoInsertar);
         Descripcion = (EditText) findViewById(R.id.DescripcionProductoInsertar);
 
+
+
+
+
         categoriaItems.add("Seleccione");
         condicionItems.add("Seleccione");
         ConsultarCategorias();
         ConsultarCondicion();
+        loadImagenByInternetbyPicasso();
 
+
+
+        if(extras.getParcelable("producto")!= null) {
+            producto1 = extras.getParcelable("producto");
+
+            Titulo.setText(producto1.getTitulo().toString());
+            Descripcion.setText(producto1.getDescripcion().toString());
+
+            String ip = "192.168.0.7:8080";
+            String urlImagen = "http://"+ip+"/donateapp/productoImagen/";
+
+            Picasso.get()
+                    .load(urlImagen+(producto1.getFotoProducto()).toString())
+                    .resize(800,800)
+                    .centerInside()
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(ImagenProductoInsertar);
+                        producto.setId(producto1.getId());
+        }
 
         ArrayAdapter<CharSequence> adapterCondicion = new ArrayAdapter(this, R.layout.spinner_item, condicionItems);
 
@@ -117,7 +145,7 @@ public class InsertarProducto extends AppCompatActivity implements Response.Erro
         ArrayAdapter<CharSequence> adapterCategoria = new ArrayAdapter(this, R.layout.spinner_item, categoriaItems);
 
 
-        loadImagenByInternetbyPicasso();
+
 
 
         //con las 2 lineas de codigo siguiente se le cambia el color al boton flotante
@@ -210,12 +238,23 @@ public class InsertarProducto extends AppCompatActivity implements Response.Erro
             producto.setDescripcion(Descripcion.getText().toString());
             producto.setHorarios("De "+hora1 + " a " + hora2);
             producto.setSituacion(2);
-            producto.setUsuario(obj.id);
+            producto.setUsuario(producto1.getIdUsuario());
 
                 String ip1 = getString(R.string.ip);
-            final String url = "http://"+ip1+"/donateapp/SubirProducto.php";
+            final String url =  "http://"+ip1+"/donateapp/SubirProducto.php";
+            final String url2 = "http://"+ip1+"/donateapp/actualizarProducto.php";
 
-            ejecutarServicio(url, bitmap12);
+            if(producto1.getId() != 0){
+                ImagenProductoInsertar.buildDrawingCache();
+                bitmap12 = ImagenProductoInsertar.getDrawingCache();
+                producto.setId(producto1.getId());
+                ejecutarServicio(url2, bitmap12);
+
+            }else{
+                producto.setUsuario(obj.id);
+                ejecutarServicio(url, bitmap12);
+            }
+
             }
         });
 
@@ -464,10 +503,11 @@ private void cargarImagen(){
                 String ano = Integer.toString(Calendar.YEAR);
                 String hora = Integer.toString(Calendar.HOUR);
                 String minuto = Integer.toString(Calendar.MINUTE);
-                String fecha =dia+"_"+mes+"_"+ano+"_"+hora+"_"+minuto;
+                String segundo = Integer.toString(Calendar.SECOND);
+                String fecha ="_"+dia+"_"+mes+"_"+ano+"_"+hora+"_"+minuto+"_"+segundo;
 
 
-                parametros.put("foto", producto.getUsuario()+fecha );
+                parametros.put("foto", producto.getUsuario()+fecha+ "_"+producto.getTitulo().toString().trim() );
                 parametros.put("Imagen",convertirBitmapString(im));
 
                 parametros.put("Usuario",Integer.toString(producto.getUsuario()).toString());
@@ -477,6 +517,7 @@ private void cargarImagen(){
                 parametros.put("Situacion",Integer.toString(producto.getSituacion()).toString());
 
                 parametros.put("Ubicacion","1");
+                parametros.put("Id",Integer.toString(producto.getId()).toString());
 
                 parametros.put("Titulo",producto.getTitulo().toString());
                 parametros.put("Descripcion",producto.getDescripcion().toString());

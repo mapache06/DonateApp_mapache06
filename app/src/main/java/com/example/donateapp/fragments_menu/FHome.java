@@ -124,7 +124,7 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
         progress.show();
 
         //Se crea string con la url donde invoca al webservice
-        String url = "http://"+ip+"/donateapp/ConsultarListaProductos.php";
+        String url = "http://"+ip+"/donateapp/ConsultarProductos.php";
 
 
         //Se recibe la informacion en forma de Json

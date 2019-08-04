@@ -70,9 +70,9 @@ public class Productos implements Parcelable {
         dest.writeString(situacion);
         dest.writeString(Altitud);
         dest.writeString(Latitud);
-        dest.writeInt(IdUsuario);
         dest.writeString(NombreUsuario);
         dest.writeString(ImagenUsuario);
+        dest.writeInt(IdUsuario);
     }
 
 
