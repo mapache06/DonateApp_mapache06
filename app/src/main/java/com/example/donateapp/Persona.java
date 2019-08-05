@@ -21,6 +21,7 @@ public class Persona implements Parcelable {
     public String data;
     public String RutaImagen;
     public Bitmap image;
+    public int ubicacion;
 
     public Persona(){};
 
@@ -33,6 +34,7 @@ public class Persona implements Parcelable {
         userName = in.readString();
         RutaImagen = in.readString();
         data = in.readString();
+        ubicacion = in.readInt();
         //image = in.readParcelable(Bitmap.class.getClassLoader());
     }
 
@@ -64,6 +66,7 @@ public class Persona implements Parcelable {
         dest.writeString(userName);
         dest.writeString(RutaImagen);
         dest.writeString(data);
+        dest.writeInt(ubicacion);
        // dest.writeParcelable(image,0);
     }
 

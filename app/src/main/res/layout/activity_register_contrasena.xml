@@ -8,6 +8,7 @@
     android:background="@color/Fondo">
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -28,8 +29,9 @@
         android:backgroundTint="@color/colorPrimary"
         android:ems="10"
         android:hint="Ingrese Contraseña"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:textColor="#000"
+
         android:textColorHint="@color/Textos"
         android:textCursorDrawable="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,7 +42,7 @@
         app:layout_constraintVertical_bias="0.45" />
 
     <EditText
-        android:id="@+id/editConfirContraseña"
+        android:id="@+id/editConfirContrasena"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
@@ -49,9 +51,10 @@
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorPrimary"
         android:ems="10"
-        android:hint="Confirme Contraseña"
-        android:inputType="textPersonName"
+        android:hint="Ingrese Contraseña"
+        android:inputType="textPassword"
         android:textColor="#000"
+
         android:textColorHint="@color/Textos"
         android:textCursorDrawable="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,15 +84,14 @@
         android:id="@+id/btnNextMostr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/button_rounded"
         android:text="Siguiente"
         android:textColor="@color/Fondo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editConfirContraseña" />
+        app:layout_constraintTop_toBottomOf="@+id/editConfirContrasena" />
 
 </android.support.constraint.ConstraintLayout>
