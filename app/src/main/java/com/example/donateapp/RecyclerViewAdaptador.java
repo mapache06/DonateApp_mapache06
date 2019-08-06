@@ -2,6 +2,7 @@ package com.example.donateapp;
 
 import android.media.Image;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,6 +76,7 @@ public class RecyclerViewAdaptador
         viewHolder.Titulo.setText(productos.get(i).getTitulo());
         viewHolder.Descripcion.setText(productos.get(i).getDescripcion());
         viewHolder.Username.setText(productos.get(i).getNombreUsuario());
+
 
 
         String ip = "192.168.0.7:8080";

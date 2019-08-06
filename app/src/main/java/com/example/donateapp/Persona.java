@@ -1,5 +1,6 @@
 package com.example.donateapp;
 
+import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Parcel;
@@ -22,6 +23,8 @@ public class Persona implements Parcelable {
     public String RutaImagen;
     public Bitmap image;
     public int ubicacion;
+    public double Altitud;
+    public double Latitud;
 
     public Persona(){};
 
@@ -35,6 +38,8 @@ public class Persona implements Parcelable {
         RutaImagen = in.readString();
         data = in.readString();
         ubicacion = in.readInt();
+        Altitud = in.readDouble();
+        Latitud = in.readDouble();
         //image = in.readParcelable(Bitmap.class.getClassLoader());
     }
 
@@ -67,6 +72,8 @@ public class Persona implements Parcelable {
         dest.writeString(RutaImagen);
         dest.writeString(data);
         dest.writeInt(ubicacion);
+        dest.writeDouble(Altitud);
+        dest.writeDouble(Latitud);
        // dest.writeParcelable(image,0);
     }
 

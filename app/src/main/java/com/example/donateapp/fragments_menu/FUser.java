@@ -93,7 +93,7 @@ public class FUser extends Fragment implements Response.ErrorListener, Response.
     private CircularImageView Image;
     private ProgressDialog progreso;
     private FloatingActionButton photo;
-    private Button botonCargar;
+
 
 
    public FUser() {

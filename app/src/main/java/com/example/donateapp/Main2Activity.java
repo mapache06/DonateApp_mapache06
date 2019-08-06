@@ -1,5 +1,7 @@
 package com.example.donateapp;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
@@ -9,23 +11,33 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.donateapp.fragments_menu.FHome;
 import com.example.donateapp.fragments_menu.FList;
 import com.example.donateapp.fragments_menu.FLocation;
 import com.example.donateapp.fragments_menu.FMessage;
 import com.example.donateapp.fragments_menu.FUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 //En este activity se crea la barra de navegacion inferior que la app tiene
-public class Main2Activity extends AppCompatActivity {
+public class Main2Activity extends AppCompatActivity implements Response.ErrorListener, Response.Listener<JSONObject> {
     //private TextView mTextMessage;
     private BottomNavigationView bottom_nav;
     private Persona obj = new Persona();
     private Bundle bundle = new Bundle();
-
+    ProgressDialog progreso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +50,7 @@ public class Main2Activity extends AppCompatActivity {
             obj = extras.getParcelable("persona");
 
         }
+
 
 
         Fragment f = new FHome();
@@ -59,19 +72,22 @@ public class Main2Activity extends AppCompatActivity {
                 switch(menuItem.getItemId())
                 {
                     case R.id.nav_Home:
-
+                        consultarUsuario();
                         f = new FHome();
 
 
                         f.setArguments(bundle);
+
                         bundle.putParcelable("x",obj);
                         cambiarFragment(f);
 
                         return true;
 
                     case R.id.nav_Location:
+                        consultarUsuario();
                         f = new FLocation();
                         f.setArguments(bundle);
+
                         bundle.putParcelable("x",obj);
                         cambiarFragment(f);
 
@@ -110,8 +126,25 @@ public class Main2Activity extends AppCompatActivity {
         });
     }
 
+    private void consultarUsuario() {
 
-//con este metodo se cambia el fragment
+        progreso = new ProgressDialog(this);
+        progreso.setMessage("Buscando informació...");
+        progreso.show();
+
+        String ip=getString(R.string.ip);
+
+        String url="http://"+ip+"/donateapp/Validar_Usuario.php?Correo="
+                +obj.eMail.toString()+"&"+
+                "Pass="+obj.password.toString();
+
+        JsonObjectRequest jsonObjectRequest =new JsonObjectRequest(Request.Method.GET,url,null,  this,this);
+        // request.add(jsonObjectRequest);
+        VolleySingleton.getIntanciaVolley(this).addToRequestQueue(jsonObjectRequest);
+    }
+
+
+    //con este metodo se cambia el fragment
     private void cambiarFragment(Fragment fragment){
         fragment.setArguments(bundle);
         bundle.putParcelable("x",obj);
@@ -120,5 +153,38 @@ public class Main2Activity extends AppCompatActivity {
         transaction.commit();
     }
 
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        progreso.hide();
+        Toast.makeText(this,"No se pudo Consultar "+error.toString(),Toast.LENGTH_SHORT).show();
+        Log.i("ERROR",error.toString());
     }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        progreso.hide();
+        //    Toast.makeText(getContext(),"Mensaje: "+response,Toast.LENGTH_SHORT).show();
+
+        JSONArray json=response.optJSONArray("usuario");
+        JSONObject jsonObject=null;
+
+        try {
+            jsonObject=json.getJSONObject(0);
+            obj.id = jsonObject.optInt("Id");
+            obj.name = jsonObject.optString("Nombre").toString();
+            obj.lastName = jsonObject.optString("Apellido".toString());
+            obj.userName = jsonObject.optString("UserName").toString();
+            obj.eMail = jsonObject.optString("Correo").toString();
+            obj.password = jsonObject.optString("Contrasena").toString();
+            obj.data=jsonObject.optString("Imagen");
+            obj.RutaImagen = jsonObject.optString("RutaImagen");
+            obj.ubicacion = jsonObject.optInt("Ubicacion");
+            obj.Latitud = jsonObject.optDouble("Latitud");
+            obj.Altitud = jsonObject.optDouble("Altitud");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+}
 

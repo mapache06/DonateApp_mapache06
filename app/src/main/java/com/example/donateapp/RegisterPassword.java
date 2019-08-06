@@ -150,6 +150,8 @@ public class RegisterPassword extends AppCompatActivity implements Response.List
             miUsuario.data=jsonObject.optString("Imagen");
             miUsuario.RutaImagen = jsonObject.optString("RutaImagen");
             miUsuario.ubicacion = jsonObject.optInt("Ubicacion");
+            miUsuario.Latitud = jsonObject.optDouble("Latitud");
+            miUsuario.Altitud = jsonObject.optDouble("Altitud");
             if (miUsuario.name != null) {
                 if (miUsuario.id == 0) {
                     Toast.makeText(this, "Usuario ó Contraseña Incorrectos", Toast.LENGTH_SHORT).show();
