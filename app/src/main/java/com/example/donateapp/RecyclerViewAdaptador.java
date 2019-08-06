@@ -79,7 +79,7 @@ public class RecyclerViewAdaptador
 
 
 
-        String ip = "192.168.0.7:8080";
+        String ip = "192.168.34.41:8080";
         String urlImagen = "http://" + ip + "/donateapp/productoImagen/";
         String urlImagen1 = "http://" + ip + "/donateapp/imagenes/";
         final String finalurl1 = urlImagen + (productos.get(i).getFotoProducto()).toString();

@@ -101,23 +101,34 @@ public class FLocation extends Fragment
 
                     }
 
-                    Address address = addressList.get(0);
-                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                    if(marcador != null){
-                        marcador.remove();
-                        marcador = mapa.addMarker(new MarkerOptions()
-                                .position(latLng)
-                                .title("Mi ubicación")
-                                .snippet("Este será el punto de referencia")
-                        );
+                    if(addressList.size() != 0) {
+                        Address address = addressList.get(0);
+                        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                        if (marcador != null) {
+                            marcador.remove();
+                            marcador = mapa.addMarker(new MarkerOptions()
+                                    .position(latLng)
+                                    .title("Mi ubicación")
+                                    .snippet("Este será el punto de referencia")
+                            );
+                        }
+
+
+                        mapa.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,17));
+
+                        lat = latLng.latitude;
+                        lon = latLng.longitude;
+                        insertarUbicacion();
+
+                    }else{
+                        UbicacionInfo.newInstance("Oops",
+                                getString(R.string.ErrorFind))
+                                .show(getFragmentManager(), null);
                     }
 
-                    mapa.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,17));
 
-                    lat = latLng.latitude;
-                    lon = latLng.longitude;
 
-                    insertarUbicacion();
+
                 }
 
 

@@ -70,7 +70,7 @@ public class RecyclerViewAdaptadorLista
         viewHolder.Titulo.setText(productos.get(i).getTitulo());
 
 
-        String ip = "192.168.0.7:8080";
+        String ip = "192.168.34.41:8080";
         String urlImagen = "http://"+ip+"/donateapp/productoImagen/";
         final String urlfinal = urlImagen+(productos.get(i).getFotoProducto()).toString();
         Picasso.get()

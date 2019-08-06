@@ -12,10 +12,11 @@
     <string name="Recibido">Recibido</string>
     <string name="RecibidoConteo">25</string>
     <string name="PublicadoConteo">13</string>
-    <string name="ip">192.168.0.7:8080</string>
+    <string name="ip">192.168.34.41:8080</string>
     <string name="InfoUbicacion">
         En la sección home, filtros, ubicación obtendrás todos los productos que esten a 5 km alrededor de este punto
     </string>
+    <string name="ErrorFind">No se encontró la ubicación, pruebe siendo mas específico</string>
 
     <string name="InfoUbicacion1">
         Mantén presionado en el mapa para marcar un punto de referencia.
