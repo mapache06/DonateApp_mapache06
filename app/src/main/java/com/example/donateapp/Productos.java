@@ -75,7 +75,7 @@ public class Productos implements Parcelable {
         dest.writeInt(IdUsuario);
     }
 
-
+//
     public void setIdUsuario(int IdUsuario) {
         this.IdUsuario = IdUsuario;
     }
