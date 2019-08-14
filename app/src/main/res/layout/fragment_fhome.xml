@@ -32,19 +32,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+<com.getbase.floatingactionbutton.FloatingActionsMenu
+    android:id="@+id/grupoFab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginEnd="15dp"
+    android:layout_marginBottom="85dp"
+    app:fab_labelStyle="@style/Etiqueta"
+    app:fab_addButtonColorNormal="@color/colorPrimary"
+    app:fab_addButtonColorPressed="@color/colorPrimaryDark"
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/ImagenAdd"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="85dp"
-            android:background="@color/colorPrimary"
-            app:backgroundTint="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:rippleColor="@color/colorPrimary"
-            app:srcCompat="@drawable/vector_add"/>
+    >
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ImagenLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_icon="@drawable/location_menu"
+        app:fabSize="mini"
+        app:fab_colorNormal="#D3CACA"
+        app:fab_colorPressed="@color/Textos"
+        app:fab_title="Filtar por ubicación"
+        />
+
+<com.getbase.floatingactionbutton.FloatingActionButton
+    android:id="@+id/ImagenAdd"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:fab_icon="@drawable/add_menu"
+    app:fabSize="mini"
+    app:fab_colorNormal="#D3CACA"
+    app:fab_title="Añadir Producto"
+    app:fab_colorPressed="@color/Textos"/>
+
+
+
+
+</com.getbase.floatingactionbutton.FloatingActionsMenu>
+         
+        
+
 
     </android.support.constraint.ConstraintLayout>
 

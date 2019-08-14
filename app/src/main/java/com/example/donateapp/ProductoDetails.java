@@ -44,7 +44,7 @@ public class ProductoDetails extends AppCompatActivity {
             condicion.setText(producto.getCondicion().toString());
             horariosDeRecoleccion.setText(producto.getHorariosDeRecoleccion().toString());
 
-            String ip = "192.168.0.7:8080";
+            String ip = "192.168.0.10:8080";
             String urlImagen = "http://"+ip+"/donateapp/productoImagen/";
 
             Picasso.get()

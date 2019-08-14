@@ -17,4 +17,13 @@
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Etiqueta" >
+        <item name="android:background">
+            @drawable/fondo_etiquetas
+        </item>
+        <item name="android:textColor">
+            #fff
+        </item>
+    </style>
+
 </resources>

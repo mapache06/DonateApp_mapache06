@@ -122,7 +122,7 @@ public class InsertarProducto extends AppCompatActivity implements Response.Erro
             Titulo.setText(producto1.getTitulo().toString());
             Descripcion.setText(producto1.getDescripcion().toString());
 
-            String ip = "192.168.34.41:8080";
+            String ip = "192.168.0.10:8080";
             String urlImagen = "http://"+ip+"/donateapp/productoImagen/";
 
             Picasso.get()

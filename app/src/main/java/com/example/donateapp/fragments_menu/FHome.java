@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +33,8 @@ import com.example.donateapp.Productos;
 import com.example.donateapp.R;
 import com.example.donateapp.RecyclerViewAdaptador;
 import com.example.donateapp.RegisterNombre;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,11 +49,12 @@ import java.util.List;
 public class FHome extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener {
 
     //esta variable FloatingActionButton funcionara para agregar un producto que desees donar
-    private FloatingActionButton txt;
+
     private RecyclerView re_products;
     public Productos producto12 = new Productos();
     Productos producto = null;
     Persona obj = new Persona();
+    private int flag = 0;
 
     //con este array se llenaran los productos almacenados en la base de datos
     private ArrayList<Productos> Lista_productos;
@@ -86,27 +89,41 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
 
         //Se asignan las variables a sus controles
         Lista_productos = new ArrayList<>();
-        txt = (FloatingActionButton) view.findViewById(R.id.ImagenAdd);
+        final FloatingActionButton txt = (FloatingActionButton) view.findViewById(R.id.ImagenAdd);
+        final FloatingActionButton txt2 = (FloatingActionButton) view.findViewById(R.id.ImagenLocation);
+        final FloatingActionsMenu menu = (FloatingActionsMenu) view.findViewById(R.id.grupoFab);
         re_products = (RecyclerView) view.findViewById(R.id.recyclerId);
         re_products.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //Se manda a llmar el metodo que recibe los datos de los productos
         cargarWebServices();
 
-
+/*
         //con las 2 lineas de codigo siguiente se le cambia el color al boton flotante
         int color = Color.parseColor("#FFFFFF");
         txt.setColorFilter(color);
 
-
+*/
         txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), InsertarProducto.class);
                 i.putExtra("persona",obj);
+                menu.collapse();
                 startActivity(i);
             }
         });
+
+        txt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flag = 1;
+                cargarWebServices();
+                menu.collapse();
+
+            }
+        });
+
         return view;
     }
 
@@ -123,14 +140,28 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
         progress.setMessage("Consultando Productos...");
         progress.show();
 
-        //Se crea string con la url donde invoca al webservice
-        String url = "http://"+ip+"/donateapp/ConsultarProductos.php";
+        if(flag == 0) {
+            //Se crea string con la url donde invoca al webservice
+            String url = "http://" + ip + "/donateapp/ConsultarProductos.php";
+
+            //Se recibe la informacion en forma de Json
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null,this,this);
+            request = Volley.newRequestQueue(getContext());
+            request.add(jsonObjectRequest);
+        }
+        else
+        {
+            String url = "http://" + ip + "/donateapp/ConsultarListaProductosByUbicacion.php?Latitud="+String.valueOf(obj.Latitud)+"&"
+                    +"Longuitud="+String.valueOf(obj.Altitud);
+
+            //Se recibe la informacion en forma de Json
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null,this,this);
+            request = Volley.newRequestQueue(getContext());
+            request.add(jsonObjectRequest);
+
+        }
 
 
-        //Se recibe la informacion en forma de Json
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null,this,this);
-        request = Volley.newRequestQueue(getContext());
-        request.add(jsonObjectRequest);
 
     }
 
@@ -157,66 +188,75 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
                  jsonObject = json.getJSONObject(i);
 
 
-                 //Se asigna las variables de la clase producto con la key
-                //que es el nombre de la coliumna de la base de datos
-                 producto.setDescripcion(jsonObject.optString("Descripcion"));
-                 producto.setFotoProducto(jsonObject.getString("Foto"));
-                 producto.setTitulo(jsonObject.getString("Titulo"));
-                 producto.setAltitud(jsonObject.getString("Altitud"));
-                 producto.setLatitud(jsonObject.getString("Latitud"));
-                 producto.setCategoría(jsonObject.getString("categoria"));
-                 producto.setSituacion(jsonObject.getString("situacion"));
-                 producto.setHorariosDeRecoleccion(jsonObject.getString("HorariosDeRecoleccion"));
-                 producto.setCondicion(jsonObject.getString("condicion"));
-                 producto.setId(jsonObject.getInt("Id"));
-                 producto.setIdUsuario(jsonObject.getInt("IdUsuario"));
-                 producto.setNombreUsuario(jsonObject.getString("NombreUsuario"));
-                 producto.setImagenUsuario(jsonObject.getString("RutaImagen"));
+                 if(jsonObject.optInt("Id") != 0) {
+                     //Se asigna las variables de la clase producto con la key
+                     //que es el nombre de la coliumna de la base de datos
+                     producto.setDescripcion(jsonObject.optString("Descripcion"));
+                     producto.setFotoProducto(jsonObject.getString("Foto"));
+                     producto.setTitulo(jsonObject.getString("Titulo"));
+                     producto.setAltitud(jsonObject.getString("Altitud"));
+                     producto.setLatitud(jsonObject.getString("Latitud"));
+                     producto.setCategoría(jsonObject.getString("categoria"));
+                     producto.setSituacion(jsonObject.getString("situacion"));
+                     producto.setHorariosDeRecoleccion(jsonObject.getString("HorariosDeRecoleccion"));
+                     producto.setCondicion(jsonObject.getString("condicion"));
+                     producto.setId(jsonObject.getInt("Id"));
+                     producto.setIdUsuario(jsonObject.getInt("IdUsuario"));
+                     producto.setNombreUsuario(jsonObject.getString("NombreUsuario"));
+                     producto.setImagenUsuario(jsonObject.getString("RutaImagen"));
+
+
+                     Lista_productos.add(producto);
+
+                     ///Se cierra la barra de progreso
+                     progress.hide();
+
+
+                     //Se crea una instancia de la clase adapter que se creo previamente y se llama al constructos que recibe una lista
+                     RecyclerViewAdaptador adaptador = new RecyclerViewAdaptador(Lista_productos);
+
+                     flag = 0;
+
+                     //Se le asigna un evento de click al Recycler
+                     adaptador.setOnClickListener(new View.OnClickListener() {
+                         @Override
+                         public void onClick(View v) {
+                             final Intent o = new Intent(getContext(), ProductoDetails.class);
+
+                             producto12.setTitulo(Lista_productos.get(re_products.getChildAdapterPosition(v)).getTitulo());
+                             producto12.setHorariosDeRecoleccion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getHorariosDeRecoleccion());
+                             producto12.setSituacion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getSituacion());
+                             producto12.setCategoría(Lista_productos.get(re_products.getChildAdapterPosition(v)).getCategoría());
+                             producto12.setLatitud(Lista_productos.get(re_products.getChildAdapterPosition(v)).getLatitud());
+                             producto12.setAltitud(Lista_productos.get(re_products.getChildAdapterPosition(v)).getAltitud());
+                             producto12.setFotoProducto(Lista_productos.get(re_products.getChildAdapterPosition(v)).getFotoProducto());
+                             producto12.setDescripcion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getDescripcion());
+                             producto12.setCondicion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getCondicion());
+                             producto12.setId(Lista_productos.get(re_products.getChildAdapterPosition(v)).getId());
+
+                             producto12.setImagenUsuario(Lista_productos.get(re_products.getChildAdapterPosition(v)).getImagenUsuario());
+                             producto12.setIdUsuario(Lista_productos.get(re_products.getChildAdapterPosition(v)).getIdUsuario());
+                             producto12.setNombreUsuario(Lista_productos.get(re_products.getChildAdapterPosition(v)).getNombreUsuario());
+
+
+                             o.putExtra("producto", producto12);
+
+                             startActivity(o);
+                         }
+                     });
+
+
+                     re_products.setAdapter(adaptador);
+                 }else
+                     {
+
+                 Toast.makeText(getContext(),"No ha seleccionado una ubicación aún", Toast.LENGTH_LONG).show();
+                     }
 
 
 
-                 Lista_productos.add(producto);
-
-                 ///Se cierra la barra de progreso
-                 progress.hide();
-
-
-                //Se crea una instancia de la clase adapter que se creo previamente y se llama al constructos que recibe una lista
-                RecyclerViewAdaptador adaptador = new RecyclerViewAdaptador(Lista_productos);
-
-                //Se le asigna un evento de click al Recycler
-                adaptador.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        final Intent o = new Intent(getContext(), ProductoDetails.class);
-
-                        producto12.setTitulo(Lista_productos.get(re_products.getChildAdapterPosition(v)).getTitulo());
-                        producto12.setHorariosDeRecoleccion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getHorariosDeRecoleccion());
-                        producto12.setSituacion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getSituacion());
-                        producto12.setCategoría(Lista_productos.get(re_products.getChildAdapterPosition(v)).getCategoría());
-                        producto12.setLatitud(Lista_productos.get(re_products.getChildAdapterPosition(v)).getLatitud());
-                        producto12.setAltitud(Lista_productos.get(re_products.getChildAdapterPosition(v)).getAltitud());
-                        producto12.setFotoProducto(Lista_productos.get(re_products.getChildAdapterPosition(v)).getFotoProducto());
-                        producto12.setDescripcion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getDescripcion());
-                        producto12.setCondicion(Lista_productos.get(re_products.getChildAdapterPosition(v)).getCondicion());
-                        producto12.setId(Lista_productos.get(re_products.getChildAdapterPosition(v)).getId());
-
-                        producto12.setImagenUsuario(Lista_productos.get(re_products.getChildAdapterPosition(v)).getImagenUsuario());
-                        producto12.setIdUsuario(Lista_productos.get(re_products.getChildAdapterPosition(v)).getIdUsuario());
-                        producto12.setNombreUsuario(Lista_productos.get(re_products.getChildAdapterPosition(v)).getNombreUsuario());
-
-
-
-
-                        o.putExtra("producto", producto12);
-
-                        startActivity(o);
-                    }
-                });
-
-
-                re_products.setAdapter(adaptador);
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
 
@@ -224,6 +264,8 @@ public class FHome extends Fragment implements Response.Listener<JSONObject>,Res
             Toast.makeText(getContext(),"No se pudo conectar "+e.toString(),Toast.LENGTH_SHORT).show();
             progress.hide();
         }
+
+        flag = 0;
     }
 
 
